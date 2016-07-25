@@ -35,9 +35,12 @@ public class ICloudTestUtils
      */
     public static ICloudService getServiceFromSystemProperties()
     {
-        return new ICloudService(
-                System.getProperty("icloud4j.test.clientId"),
-                System.getProperty("icloud4j.test.username"),
-                System.getProperty("icloud4j.test.password").toCharArray());
+        ICloudService iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
+
+        iCloudService.authenticate(
+            System.getProperty("icloud4j.test.username"),
+            System.getProperty("icloud4j.test.password").toCharArray());
+
+        return iCloudService;
     }
 }

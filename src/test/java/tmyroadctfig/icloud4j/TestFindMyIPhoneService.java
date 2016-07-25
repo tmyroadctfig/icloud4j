@@ -17,25 +17,30 @@
 package tmyroadctfig.icloud4j;
 
 import org.junit.Test;
+import tmyroadctfig.icloud4j.json.AppleDevice;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static tmyroadctfig.icloud4j.ICloudTestUtils.getServiceFromSystemProperties;
 
 /**
- * Tests for {@link ICloudService}.
+ * Tests for {@link FindMyIPhoneService}.
  */
-public class TestICloudService
+public class TestFindMyIPhoneService
 {
     @Test
-    public void testLogin()
+    public void testDevices()
     {
-        // Arrange / Act
+        // Arrange
         ICloudService iCloudService = getServiceFromSystemProperties();
+        FindMyIPhoneService findMyIPhoneService = new FindMyIPhoneService(iCloudService);
+
+        // Act
+        List<AppleDevice> devices = findMyIPhoneService.getDevices();
 
         // Assert
-        assertThat(iCloudService.getLoginInfo().get("dsInfo"), is(not(nullValue())));
+        assertThat(devices.isEmpty(), is(false));
     }
 }
