@@ -25,6 +25,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.entity.StringEntity;
@@ -155,7 +156,7 @@ public class ICloudService implements java.io.Closeable
 
             HttpPost post = new HttpPost(uri);
             post.setEntity(new StringEntity(new Gson().toJson(params), Consts.UTF_8));
-            populatePostHeadersParameters(post);
+            populateRequestHeadersParameters(post);
 
             HttpResponse response = httpClient.execute(post);
             Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
@@ -237,15 +238,25 @@ public class ICloudService implements java.io.Closeable
     }
 
     /**
-     * Populates the HTTP post headers.
+     * Gets the session ID.
      *
-     * @param post the post to populate.
+     * @return the session ID.
      */
-    public void populatePostHeadersParameters(HttpPost post)
+    public String getSessionId()
     {
-        post.setHeader("Origin", endPoint);
-        post.setHeader("Referer", endPoint + "/");
-        post.setHeader("User-Agent", "Opera/9.52 (X11; Linux i686; U; en)");
+        return dsid;
+    }
+
+    /**
+     * Populates the HTTP request headers.
+     *
+     * @param request the request to populate.
+     */
+    public void populateRequestHeadersParameters(HttpRequestBase request)
+    {
+        request.setHeader("Origin", endPoint);
+        request.setHeader("Referer", endPoint + "/");
+        request.setHeader("User-Agent", "Opera/9.52 (X11; Linux i686; U; en)");
     }
 
     @Override

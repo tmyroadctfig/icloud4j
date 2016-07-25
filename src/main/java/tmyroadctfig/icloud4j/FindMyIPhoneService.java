@@ -89,7 +89,7 @@ public class FindMyIPhoneService
 
             HttpPost post = new HttpPost(uri);
             post.setEntity(new StringEntity(requestJson, null, "UTF-8"));
-            iCloudService.populatePostHeadersParameters(post);
+            iCloudService.populateRequestHeadersParameters(post);
 
             String rawResponse = iCloudService.getHttpClient().execute(post, new StringResponseHandler());
             FindMyIPhoneResponse findMyIPhoneResponse = new Gson().fromJson(rawResponse, FindMyIPhoneResponse.class);
