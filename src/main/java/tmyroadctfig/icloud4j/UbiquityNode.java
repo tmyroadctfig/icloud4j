@@ -125,11 +125,21 @@ public class UbiquityNode
     /**
      * Gets the type.
      *
-     * @return th type.
+     * @return the type.
      */
     public String getType()
     {
         return nodeDetails.type;
+    }
+
+    /**
+     * Gets the node details.
+     *
+     * @return th details.
+     */
+    public UbiquityNodeDetails getNodeDetails()
+    {
+        return nodeDetails;
     }
 
     @Override
