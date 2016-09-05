@@ -242,6 +242,16 @@ public class ICloudService implements java.io.Closeable
     }
 
     /**
+     * Gets the cookie store.
+     *
+     * @return the store.
+     */
+    public CookieStore getCookieStore()
+    {
+        return cookieStore;
+    }
+
+    /**
      * Gets the client ID.
      *
      * @return the client ID.

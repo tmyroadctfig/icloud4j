@@ -47,6 +47,11 @@ public class DriveService
     private final String serviceRoot;
 
     /**
+     * The 'docs' service URL.
+     */
+    private final String docsServiceRoot;
+
+    /**
      * Creates a new drive service.
      *
      * @param iCloudService the iCloud service.
@@ -56,6 +61,9 @@ public class DriveService
         this.iCloudService = iCloudService;
         Map<String, Object> driveSettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("drivews");
         serviceRoot = (String) driveSettings.get("url");
+
+        Map<String, Object> docsSettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("docws");
+        docsServiceRoot = (String) docsSettings.get("url");
     }
 
     /**
@@ -121,5 +129,15 @@ public class DriveService
     public String getServiceUrl()
     {
         return serviceRoot;
+    }
+
+    /**
+     * Gets the Docs service root URL.
+     *
+     * @return the service URL.
+     */
+    public String getDocsServiceUrl()
+    {
+        return docsServiceRoot;
     }
 }
