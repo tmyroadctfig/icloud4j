@@ -16,26 +16,25 @@
 
 package tmyroadctfig.icloud4j;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Throwables;
-import com.google.gson.Gson;
+import com.google.common.collect.Iterables;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpGet;
-import tmyroadctfig.icloud4j.json.UbiquityGetChildrenResponse;
-import tmyroadctfig.icloud4j.json.UbiquityNodeDetails;
-import tmyroadctfig.icloud4j.util.StringResponseHandler;
+import tmyroadctfig.icloud4j.json.DriveNodeDetails;
+import tmyroadctfig.icloud4j.util.JsonToMapResponseHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Map;
 
 /**
- * A node in the ubiquity service.
+ * A node in the iCloud Drive service.
  *
  * @author Luke Quinane
  */
-public class UbiquityNode
+public class DriveNode
 {
     /**
      * The iCloud service.
@@ -43,9 +42,9 @@ public class UbiquityNode
     private final ICloudService iCloudService;
 
     /**
-     * The ubiquity service.
+     * The drive service.
      */
-    private final UbiquityService ubiquityService;
+    private final DriveService driveService;
 
     /**
      * The node ID.
@@ -55,19 +54,19 @@ public class UbiquityNode
     /**
      * The node details.
      */
-    private final UbiquityNodeDetails nodeDetails;
+    private final DriveNodeDetails nodeDetails;
 
     /**
      * Creates a new node.
      *
      * @param iCloudService the iCloud service.
-     * @param ubiquityService the service reference.
+     * @param driveService the service reference.
      * @param id the ID.
      */
-    public UbiquityNode(ICloudService iCloudService, UbiquityService ubiquityService, String id, UbiquityNodeDetails nodeDetails)
+    public DriveNode(ICloudService iCloudService, DriveService driveService, String id, DriveNodeDetails nodeDetails)
     {
         this.iCloudService = iCloudService;
-        this.ubiquityService = ubiquityService;
+        this.driveService = driveService;
         this.id = id;
         this.nodeDetails = nodeDetails;
     }
@@ -77,25 +76,9 @@ public class UbiquityNode
      *
      * @return the children.
      */
-    public List<UbiquityNode> getChildren()
+    public List<DriveNode> getChildren()
     {
-        try
-        {
-            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(), "parent", id);
-            HttpGet httpGet = new HttpGet(url);
-            iCloudService.populateRequestHeadersParameters(httpGet);
-
-            String rawResponse = iCloudService.getHttpClient().execute(httpGet, new StringResponseHandler());
-            UbiquityGetChildrenResponse getChildrenResponse = new Gson().fromJson(rawResponse, UbiquityGetChildrenResponse.class);
-
-            return Stream.of(getChildrenResponse.item_list)
-                .map(item -> new UbiquityNode(iCloudService, ubiquityService, item.item_id, item))
-                .collect(Collectors.toList());
-        }
-        catch (Exception e)
-        {
-            throw Throwables.propagate(e);
-        }
+        return driveService.getChildren(id);
     }
 
     /**
@@ -107,11 +90,21 @@ public class UbiquityNode
     {
         try
         {
-            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(), "file", id);
-            HttpGet httpGet = new HttpGet(url);
-            iCloudService.populateRequestHeadersParameters(httpGet);
+            // Get the download URL for the item
+            String contentUrlLookupUrl = String.format("%s/ws/%s/download/by_id", driveService.getServiceUrl(), nodeDetails.zone);
+            HttpGet contentUrlGetRequest = new HttpGet(contentUrlLookupUrl);
+            iCloudService.populateRequestHeadersParameters(contentUrlGetRequest);
+            contentUrlGetRequest.addHeader("clientMasteringNumber", "14E45");
+            contentUrlGetRequest.addHeader("document_id", Iterables.getLast(Splitter.on(":").splitToList(id)));
+            //httpGet.addHeader("token", );
 
-            try (InputStream inputStream = iCloudService.getHttpClient().execute(httpGet).getEntity().getContent())
+            Map<String, Object> result = iCloudService.getHttpClient().execute(contentUrlGetRequest, new JsonToMapResponseHandler());
+            Map<String, Object> dataTokenMap = (Map<String, Object>) result.get("data_token");
+
+            String contentUrl = (String) dataTokenMap.get("url");
+            HttpGet contentRequest = new HttpGet(contentUrl);
+
+            try (InputStream inputStream = iCloudService.getHttpClient().execute(contentRequest).getEntity().getContent())
             {
                 IOUtils.copyLarge(inputStream, outputStream, new byte[0x10000]);
             }
@@ -137,7 +130,7 @@ public class UbiquityNode
      *
      * @return th details.
      */
-    public UbiquityNodeDetails getNodeDetails()
+    public DriveNodeDetails getNodeDetails()
     {
         return nodeDetails;
     }
@@ -145,6 +138,6 @@ public class UbiquityNode
     @Override
     public String toString()
     {
-        return String.format("u-node:[%s %s '%s']", id, nodeDetails.type, nodeDetails.name);
+        return String.format("drv-node:[%s %s '%s']", id, nodeDetails.type, nodeDetails.name);
     }
 }

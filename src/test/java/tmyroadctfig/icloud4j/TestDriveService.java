@@ -18,39 +18,29 @@ package tmyroadctfig.icloud4j;
 
 import org.junit.Test;
 
-import java.util.Map;
+import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static tmyroadctfig.icloud4j.ICloudTestUtils.getServiceFromSystemProperties;
 
 /**
- * Tests for {@link ICloudService}.
+ * Tests for {@link DriveService}.
  */
-public class TestICloudService
+public class TestDriveService
 {
     @Test
-    public void testLogin()
-    {
-        // Arrange / Act
-        ICloudService iCloudService = getServiceFromSystemProperties();
-
-        // Assert
-        assertThat(iCloudService.getLoginInfo().get("dsInfo"), is(not(nullValue())));
-    }
-
-    @Test
-    public void testStorageUsageInfo()
+    public void testListItems()
     {
         // Arrange
         ICloudService iCloudService = getServiceFromSystemProperties();
+        DriveService driveService = new DriveService(iCloudService);
 
         // Act
-        Map<String, Object> storageUsage = iCloudService.getStorageUsage();
+        DriveNode root = driveService.getRoot();
+        List<DriveNode> children = root.getChildren();
 
         // Assert
-        assertThat(storageUsage.get("quotaStatus"), is(not(nullValue())));
-        assertThat(storageUsage.get("storageUsageInfo"), is(not(nullValue())));
-        assertThat(storageUsage.get("storageUsageByMedia"), is(not(nullValue())));
+        assertThat(children.isEmpty(), is(false));
     }
 }

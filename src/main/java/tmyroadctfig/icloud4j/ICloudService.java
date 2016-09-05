@@ -180,6 +180,37 @@ public class ICloudService implements java.io.Closeable
     }
 
     /**
+     * Gets the iCloud storage usage.
+     *
+     * @return the map of storage usage details.
+     */
+    public Map<String, Object> getStorageUsage()
+    {
+        try
+        {
+            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/storageUsageInfo");
+            populateUriParameters(uriBuilder);
+            URI uri = uriBuilder.build();
+
+            HttpPost post = new HttpPost(uri);
+            populateRequestHeadersParameters(post);
+
+            HttpResponse response = httpClient.execute(post);
+            Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
+            if (Boolean.FALSE.equals(result.get("success")))
+            {
+                throw new RuntimeException("Failed to get storage usage info: " + result.get("error"));
+            }
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw Throwables.propagate(e);
+        }
+    }
+
+    /**
      * Gets the login info.
      *
      * @return the login info.
