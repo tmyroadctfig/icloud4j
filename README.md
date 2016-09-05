@@ -1,4 +1,4 @@
-iCloud4j is a Java port of the PyiCloud library. It provides a means for Java applications to use iCloud web services.
+iCloud4j is a Java port of the [PyiCloud](https://github.com/picklepete/pyicloud) library. It provides a means for Java applications to use iCloud web services.
 It is licenced under the Apache 2.0 licence.
 
 # Authentication
