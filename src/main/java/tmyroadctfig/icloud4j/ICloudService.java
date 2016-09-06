@@ -22,8 +22,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
@@ -33,11 +34,17 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
+import tmyroadctfig.icloud4j.json.TrustedDevice;
+import tmyroadctfig.icloud4j.json.TrustedDeviceResponse;
+import tmyroadctfig.icloud4j.json.TrustedDevices;
 import tmyroadctfig.icloud4j.util.JsonToMapResponseHandler;
+import tmyroadctfig.icloud4j.util.StringResponseHandler;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -158,20 +165,143 @@ public class ICloudService implements java.io.Closeable
             post.setEntity(new StringEntity(new Gson().toJson(params), Consts.UTF_8));
             populateRequestHeadersParameters(post);
 
-            HttpResponse response = httpClient.execute(post);
-            Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
-            if (Boolean.FALSE.equals(result.get("success")))
+            try (CloseableHttpResponse response = httpClient.execute(post))
             {
-                throw new RuntimeException("Failed to log into iCloud: " + result.get("error"));
+                Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
+                if (Boolean.FALSE.equals(result.get("success")))
+                {
+                    throw new RuntimeException("Failed to log into iCloud: " + result.get("error"));
+                }
+
+                loginInfo = result;
+
+                // Grab the session ID
+                Map<String, Object> dsInfoMap = (Map<String, Object>) result.get("dsInfo");
+                dsid = (String) dsInfoMap.get("dsid");
+
+                return loginInfo;
+            }
+        }
+        catch (Exception e)
+        {
+            throw Throwables.propagate(e);
+        }
+    }
+
+    /**
+     * Checks whether two-factor authentication is enabled for this account.
+     *
+     * @return {@code true} if two-factor authentication is enabled.
+     */
+    public boolean isTwoFactorEnabled()
+    {
+        return Boolean.TRUE.equals(loginInfo.get("hsaChallengeRequired"));
+    }
+
+    /**
+     * Gets the trusted two-factor authentication devices for the current account.
+     *
+     * @return the list of trusted devices.
+     */
+    public List<TrustedDevice> getTrustedDevices()
+    {
+        try
+        {
+            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/listDevices");
+            populateUriParameters(uriBuilder);
+            URI uri = uriBuilder.build();
+
+            HttpGet httpGet = new HttpGet(uri);
+            populateRequestHeadersParameters(httpGet);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpGet))
+            {
+                TrustedDevices trustedDevices = new Gson().fromJson(new StringResponseHandler().handleResponse(response), TrustedDevices.class);
+
+                return Arrays.asList(trustedDevices.devices);
+            }
+        }
+        catch (Exception e)
+        {
+            throw Throwables.propagate(e);
+        }
+    }
+
+    /**
+     * Requests that a two-factor verification code be sent to the given trusted device.
+     *
+     * @param device the device to send the verification code to.
+     */
+    public void sendVerificationCode(TrustedDevice device)
+    {
+        try
+        {
+            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/sendVerificationCode");
+            populateUriParameters(uriBuilder);
+            URI uri = uriBuilder.build();
+
+            HttpPost post = new HttpPost(uri);
+            post.setEntity(new StringEntity(new Gson().toJson(device), Consts.UTF_8.name()));
+            populateRequestHeadersParameters(post);
+
+            Map<String, Object> response = httpClient.execute(post, new JsonToMapResponseHandler());
+
+            if (!Boolean.TRUE.equals(response.get("success")))
+            {
+                throw new IllegalStateException("Failed to send verification code: " + response.get("errorMessage"));
+            }
+        }
+        catch (Exception e)
+        {
+            throw Throwables.propagate(e);
+        }
+    }
+
+    /**
+     * Validates the verification code.
+     *
+     * @param device the device the code was sent to.
+     * @param code the code.
+     * @param password the user's password.
+     */
+    public void validateVerificationCode(TrustedDevice device, String code, char[] password)
+    {
+        try
+        {
+            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/validateVerificationCode");
+            populateUriParameters(uriBuilder);
+            URI uri = uriBuilder.build();
+
+            TrustedDeviceResponse responseDevice = new TrustedDeviceResponse();
+            responseDevice.areaCode = device.areaCode;
+            responseDevice.deviceType = device.deviceType;
+            responseDevice.deviceId = device.deviceId;
+            responseDevice.phoneNumber = device.phoneNumber;
+            responseDevice.verificationCode = code;
+            responseDevice.trustBrowser = true;
+
+            HttpPost post = new HttpPost(uri);
+            post.setEntity(new StringEntity(new Gson().toJson(responseDevice), Consts.UTF_8));
+            populateRequestHeadersParameters(post);
+
+            Map<String, Object> response = httpClient.execute(post, new JsonToMapResponseHandler());
+
+            if (!Boolean.TRUE.equals(response.get("success")))
+            {
+                if (Double.valueOf(-21669.0).equals(response.get("errorCode")))
+                {
+                    throw new RuntimeException("Invalid verification code");
+                }
+                else
+                {
+                    throw new IllegalStateException("Failed to verify code: " + response.get("errorMessage"));
+                }
             }
 
-            loginInfo = result;
-
-            // Grab the session ID
-            Map<String, Object> dsInfoMap = (Map<String, Object>) result.get("dsInfo");
-            dsid = (String) dsInfoMap.get("dsid");
-
-            return loginInfo;
+            // Re-authenticate, which will both update the two-factor authentication data, and ensure that we save the
+            // X-APPLE-WEBAUTH-HSA-TRUST cookie
+            Map<String, Object> dsInfo = (Map<String, Object>) loginInfo.get("dsInfo");
+            authenticate((String) dsInfo.get("appleId"), password);
         }
         catch (Exception e)
         {
@@ -195,14 +325,16 @@ public class ICloudService implements java.io.Closeable
             HttpPost post = new HttpPost(uri);
             populateRequestHeadersParameters(post);
 
-            HttpResponse response = httpClient.execute(post);
-            Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
-            if (Boolean.FALSE.equals(result.get("success")))
+            try (CloseableHttpResponse response = httpClient.execute(post))
             {
-                throw new RuntimeException("Failed to get storage usage info: " + result.get("error"));
-            }
+                Map<String, Object> result = new JsonToMapResponseHandler().handleResponse(response);
+                if (Boolean.FALSE.equals(result.get("success")))
+                {
+                    throw new RuntimeException("Failed to get storage usage info: " + result.get("error"));
+                }
 
-            return result;
+                return result;
+            }
         }
         catch (Exception e)
         {

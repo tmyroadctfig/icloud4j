@@ -17,6 +17,9 @@
 package tmyroadctfig.icloud4j;
 
 import org.apache.log4j.BasicConfigurator;
+import tmyroadctfig.icloud4j.json.TrustedDevice;
+
+import java.util.List;
 
 /**
  * Testing utilities
@@ -37,9 +40,23 @@ public class ICloudTestUtils
     {
         ICloudService iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
 
+        char[] password = System.getProperty("icloud4j.test.password").toCharArray();
+
         iCloudService.authenticate(
             System.getProperty("icloud4j.test.username"),
-            System.getProperty("icloud4j.test.password").toCharArray());
+            password);
+
+        if (iCloudService.isTwoFactorEnabled())
+        {
+            List<TrustedDevice> devices = iCloudService.getTrustedDevices();
+            TrustedDevice device = devices.get(0);
+            iCloudService.sendVerificationCode(device);
+
+            System.out.println("Please set a break point in the debugger and adjust the two factor verification code:");
+            String code = "";
+
+            iCloudService.validateVerificationCode(device, code, password);
+        }
 
         return iCloudService;
     }

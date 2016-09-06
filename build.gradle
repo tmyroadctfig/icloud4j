@@ -1,5 +1,5 @@
 group 'tmyroadctfig.icloud4j'
-version '1.1'
+version '1.2'
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -11,6 +11,9 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
 }
+
+compileJava.options.debug = true
+compileJava.options.debugOptions.debugLevel = "source,lines,vars"
 
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
