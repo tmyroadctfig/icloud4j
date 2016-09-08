@@ -42,4 +42,10 @@ public class TrustedDevice
      * The device ID, e.g. "1".
      */
     public String deviceId;
+
+    @Override
+    public String toString()
+    {
+        return String.format("[%s] %s: (%s) %s", deviceId, deviceType, areaCode, phoneNumber);
+    }
 }

@@ -16,6 +16,7 @@
 
 package tmyroadctfig.icloud4j;
 
+import org.apache.http.StatusLine;
 import org.apache.log4j.BasicConfigurator;
 import tmyroadctfig.icloud4j.json.TrustedDevice;
 
@@ -40,22 +41,37 @@ public class ICloudTestUtils
     {
         ICloudService iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
 
+        String username = System.getProperty("icloud4j.test.username");
         char[] password = System.getProperty("icloud4j.test.password").toCharArray();
 
         iCloudService.authenticate(
-            System.getProperty("icloud4j.test.username"),
+            username,
             password);
 
         if (iCloudService.isTwoFactorEnabled())
         {
-            List<TrustedDevice> devices = iCloudService.getTrustedDevices();
-            TrustedDevice device = devices.get(0);
-            iCloudService.sendVerificationCode(device);
+            boolean useManualCode = Boolean.getBoolean("icloud4j.test.useManualTwoFactorCode");
 
-            System.out.println("Please set a break point in the debugger and adjust the two factor verification code:");
-            String code = "";
+            if (useManualCode)
+            {
+                List<TrustedDevice> devices = iCloudService.getTrustedDevices();
+                TrustedDevice device = devices.get(0);
+                iCloudService.sendManualVerificationCode(device);
 
-            iCloudService.validateVerificationCode(device, code, password);
+                System.out.println("Please set a break point in the debugger and adjust the manual two factor verification code:");
+                String code = "";
+
+                iCloudService.validateManualVerificationCode(device, code, password);
+            }
+            else
+            {
+                StatusLine statusLine = iCloudService.getIdmsaService().authenticateViaIdmsa(username, password);
+
+                System.out.println("Please set a break point in the debugger and adjust the automatic two factor verification code:");
+                String code = "";
+
+                iCloudService.getIdmsaService().validateAutomaticVerificationCode(code);
+            }
         }
 
         return iCloudService;

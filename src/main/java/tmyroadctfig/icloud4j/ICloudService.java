@@ -95,12 +95,17 @@ public class ICloudService implements java.io.Closeable
     private final CookieStore cookieStore;
 
     /**
+     * The idmsa service.
+     */
+    private final IdmsaService idmsaService;
+
+    /**
      * The login info.
      */
     private Map<String, Object> loginInfo;
 
     /**
-     * The sesion ID.
+     * The iCloud session ID.
      */
     private String dsid;
 
@@ -140,6 +145,8 @@ public class ICloudService implements java.io.Closeable
         {
             throw Throwables.propagate(e);
         }
+
+        idmsaService = new IdmsaService(this);
     }
 
     /**
@@ -150,16 +157,26 @@ public class ICloudService implements java.io.Closeable
      */
     public Map<String, Object> authenticate(@Nonnull String username, @Nonnull char[] password)
     {
+        Map<String, Object> params = ImmutableMap.of(
+            "apple_id", username,
+            "password", new String(password),
+            "extended_login", false);
+
+        return authenticate(params);
+    }
+
+    /**
+     * Attempts to log in to iCloud.
+     *
+     * @param params the map of parameters to pass to login.
+     */
+    public Map<String, Object> authenticate(Map<String, Object> params)
+    {
         try
         {
             URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/login");
             populateUriParameters(uriBuilder);
             URI uri = uriBuilder.build();
-
-            Map<String, Object> params = ImmutableMap.of(
-                "apple_id", username,
-                "password", new String(password),
-                "extended_login", false);
 
             HttpPost post = new HttpPost(uri);
             post.setEntity(new StringEntity(new Gson().toJson(params), Consts.UTF_8));
@@ -228,11 +245,15 @@ public class ICloudService implements java.io.Closeable
     }
 
     /**
-     * Requests that a two-factor verification code be sent to the given trusted device.
+     * <p>Requests that a two-factor verification code be sent to the given trusted device. The value sent to the device
+     * should be submitted to {@link #validateManualVerificationCode(TrustedDevice, String, char[])} for verification.</p>
+     *
+     * <p>Note: newer devices will automatically display a verification code without manually requesting one, and that
+     *  must be submitted via {@link }.</p>
      *
      * @param device the device to send the verification code to.
      */
-    public void sendVerificationCode(TrustedDevice device)
+    public void sendManualVerificationCode(TrustedDevice device)
     {
         try
         {
@@ -258,17 +279,17 @@ public class ICloudService implements java.io.Closeable
     }
 
     /**
-     * Validates the verification code.
+     * Validates the manually requested verification code. See {@link #sendManualVerificationCode(TrustedDevice)}.
      *
      * @param device the device the code was sent to.
      * @param code the code.
      * @param password the user's password.
      */
-    public void validateVerificationCode(TrustedDevice device, String code, char[] password)
+    public void validateManualVerificationCode(TrustedDevice device, String code, char[] password)
     {
         try
         {
-            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/validateVerificationCode");
+            URIBuilder uriBuilder = new URIBuilder(setupEndPoint + "/validateManualVerificationCode");
             populateUriParameters(uriBuilder);
             URI uri = uriBuilder.build();
 
@@ -391,6 +412,16 @@ public class ICloudService implements java.io.Closeable
     public String getClientId()
     {
         return clientId;
+    }
+
+    /**
+     * Gets the 'idmsa' service.
+     *
+     * @return the service.
+     */
+    public IdmsaService getIdmsaService()
+    {
+        return idmsaService;
     }
 
     /**
