@@ -62,11 +62,6 @@ public class IdmsaService
     private final CloseableHttpClient httpClient;
 
     /**
-     * The value for the idmsa 'X-Apple-ID-Session-Token' header.
-     */
-    private String appleIdSessionToken;
-
-    /**
      * The value for the idmsa 'X-Apple-ID-Session-Id' header.
      */
     private String appleIdSessionId;
@@ -75,6 +70,16 @@ public class IdmsaService
      * The value for the idmsa 'scnt' header.
      */
     private String scnt;
+
+    /**
+     * The auth token sent back to iCloud ('X-Apple-ID-Session-Token').
+     */
+    private String authToken;
+
+    /**
+     * The trust token sent back to iCloud.
+     */
+    private String trustToken;
 
     /**
      * Creates a new idmsa service.
@@ -114,7 +119,7 @@ public class IdmsaService
                 Header sessionTokenHeader = response.getFirstHeader("X-Apple-Session-Token");
                 if (sessionTokenHeader != null)
                 {
-                    appleIdSessionToken = sessionTokenHeader.getValue();
+                    authToken = sessionTokenHeader.getValue();
                 }
                 Header sessionHeader = response.getFirstHeader("X-Apple-ID-Session-Id");
                 if (sessionHeader != null)
@@ -146,8 +151,8 @@ public class IdmsaService
     {
         try
         {
-            String authToken = sendIdmsaCode(code);
-            String trustToken = getTrustToken();
+            authToken = sendIdmsaCode(code);
+            trustToken = retrieveTrustToken();
 
             // Re-authenticate, which will both update the two-factor authentication data, and ensure that we save the
             // X-APPLE-WEBAUTH-HSA-TRUST cookie
@@ -198,7 +203,7 @@ public class IdmsaService
      * @return the trust token.
      * @throws IOException if an error occur.s
      */
-    private String getTrustToken() throws IOException
+    private String retrieveTrustToken() throws IOException
     {
         HttpGet httpGet = new HttpGet(idmsaAuthEndPoint + "/2sv/trust");
         populateIdmsaRequestHeadersParameters(httpGet);
@@ -239,5 +244,25 @@ public class IdmsaService
         {
             request.setHeader("scnt", scnt);
         }
+    }
+
+    /**
+     * Gets the auth token.
+     *
+     * @return the token.
+     */
+    public String getAuthToken()
+    {
+        return authToken;
+    }
+
+    /**
+     * Gets the trust token.
+     *
+     * @return the trust token.
+     */
+    public String getTrustToken()
+    {
+        return trustToken;
     }
 }
