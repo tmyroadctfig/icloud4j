@@ -19,6 +19,7 @@ package tmyroadctfig.icloud4j.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -47,9 +48,8 @@ public class ICloudUtils
      */
     public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpPost post, Class<T> responseClass)
     {
-        try
+        try (CloseableHttpResponse response = httpClient.execute(post))
         {
-            HttpResponse response = httpClient.execute(post);
             String rawResponseContent = new StringResponseHandler().handleResponse(response);
 
             try
@@ -81,9 +81,8 @@ public class ICloudUtils
      */
     public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpGet httpGet, Class<T> responseClass)
     {
-        try
+        try (CloseableHttpResponse response = httpClient.execute(httpGet))
         {
-            HttpResponse response = httpClient.execute(httpGet);
             String rawResponseContent = new StringResponseHandler().handleResponse(response);
 
             try
