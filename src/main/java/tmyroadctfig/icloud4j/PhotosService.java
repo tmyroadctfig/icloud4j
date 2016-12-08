@@ -146,8 +146,8 @@ public class PhotosService
             String rawResponse = iCloudService.getHttpClient().execute(httpGet, new StringResponseHandler());
             PhotosAlbumsResponse photosAlbumsResponse = new Gson().fromJson(rawResponse, PhotosAlbumsResponse.class);
 
-            return Arrays.asList(photosAlbumsResponse.folders)
-                .stream()
+            return Arrays
+                .stream(photosAlbumsResponse.folders)
                 .filter(folder -> "album".equals(folder.type))
                 .collect(Collectors.toList());
         }

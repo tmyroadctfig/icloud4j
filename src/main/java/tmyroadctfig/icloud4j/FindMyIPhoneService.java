@@ -17,13 +17,12 @@
 package tmyroadctfig.icloud4j;
 
 import com.google.common.base.Throwables;
-import com.google.gson.Gson;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import tmyroadctfig.icloud4j.json.AppleDevice;
 import tmyroadctfig.icloud4j.json.FindMyIPhoneResponse;
-import tmyroadctfig.icloud4j.util.StringResponseHandler;
+import tmyroadctfig.icloud4j.util.ICloudUtils;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -91,8 +90,8 @@ public class FindMyIPhoneService
             post.setEntity(new StringEntity(requestJson, null, "UTF-8"));
             iCloudService.populateRequestHeadersParameters(post);
 
-            String rawResponse = iCloudService.getHttpClient().execute(post, new StringResponseHandler());
-            FindMyIPhoneResponse findMyIPhoneResponse = new Gson().fromJson(rawResponse, FindMyIPhoneResponse.class);
+            FindMyIPhoneResponse findMyIPhoneResponse =
+                ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), post, FindMyIPhoneResponse.class);
 
             return Arrays.asList(findMyIPhoneResponse.content);
         }

@@ -17,10 +17,9 @@
 package tmyroadctfig.icloud4j;
 
 import com.google.common.base.Throwables;
-import com.google.gson.Gson;
 import org.apache.http.client.methods.HttpGet;
 import tmyroadctfig.icloud4j.json.UbiquityNodeDetails;
-import tmyroadctfig.icloud4j.util.StringResponseHandler;
+import tmyroadctfig.icloud4j.util.ICloudUtils;
 
 import java.util.Map;
 
@@ -68,8 +67,8 @@ public class UbiquityService
             HttpGet httpGet = new HttpGet(url);
             iCloudService.populateRequestHeadersParameters(httpGet);
 
-            String rawResponse = iCloudService.getHttpClient().execute(httpGet, new StringResponseHandler());
-            UbiquityNodeDetails nodeDetails = new Gson().fromJson(rawResponse, UbiquityNodeDetails.class);
+            UbiquityNodeDetails nodeDetails =
+                ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), httpGet, UbiquityNodeDetails.class);
 
             return new UbiquityNode(iCloudService, this, rootId, nodeDetails);
         }

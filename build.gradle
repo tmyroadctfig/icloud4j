@@ -1,5 +1,5 @@
 group 'tmyroadctfig.icloud4j'
-version '1.3'
+version '1.4'
 
 apply plugin: 'java'
 apply plugin: 'idea'

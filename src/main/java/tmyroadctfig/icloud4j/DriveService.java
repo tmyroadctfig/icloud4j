@@ -17,11 +17,10 @@
 package tmyroadctfig.icloud4j;
 
 import com.google.common.base.Throwables;
-import com.google.gson.Gson;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import tmyroadctfig.icloud4j.json.DriveNodeDetails;
-import tmyroadctfig.icloud4j.util.StringResponseHandler;
+import tmyroadctfig.icloud4j.util.ICloudUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -92,8 +91,7 @@ public class DriveService
             post.addHeader("clientMasteringNumber", "14E45");
             post.setEntity(new StringEntity(String.format("[{\"drivewsid\":\"%s\",\"partialData\":false}]", nodeId), "UTF-8"));
 
-            String rawResponse = iCloudService.getHttpClient().execute(post, new StringResponseHandler());
-            return new Gson().fromJson(rawResponse, DriveNodeDetails[].class)[0];
+            return ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), post, DriveNodeDetails[].class)[0];
         }
         catch (Exception e)
         {
