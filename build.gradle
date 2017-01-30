@@ -15,6 +15,7 @@ repositories {
 
 compileJava.options.debug = true
 compileJava.options.debugOptions.debugLevel = "source,lines,vars"
+compileJava.options.compilerArgs << "-Xlint:deprecation"
 
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
@@ -28,37 +29,43 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-task createPom << {
-    pom {
-        project {
-            groupId "$project.group"
-            artifactId "$project.name"
-            version "$version"
+def pomConfig = {
+    groupId "$project.group"
+    artifactId "$project.name"
+    version "$version"
 
-            name 'iCloud4j'
-            packaging 'jar'
-            url 'https://github.com/tmyroadctfig/icloud4j'
+    name 'iCloud4j'
+    description 'A library for accessing Apple\'s iCloud API'
+    packaging 'jar'
+    url 'https://github.com/tmyroadctfig/icloud4j'
 
-            scm {
-                connection 'scm:git:https://github.com/tmyroadctfig/icloud4j.git'
-            }
+    scm {
+        connection 'scm:git:https://github.com/tmyroadctfig/icloud4j.git'
+        url 'https://github.com/tmyroadctfig/icloud4j'
+    }
 
-            licenses {
-                license {
-                    name 'The Apache License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                }
-            }
-
-            developers {
-                developer {
-                    id 'tmyroadctfig'
-                    name 'Luke Quinane'
-                    email 'luke.quinane@gmail.com'
-                }
-            }
+    licenses {
+        license {
+            name 'The Apache License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
         }
-    }.writeTo("$buildDir/pom.xml")
+    }
+
+    developers {
+        developer {
+            id 'tmyroadctfig'
+            name 'Luke Quinane'
+            email 'luke.quinane@gmail.com'
+        }
+    }
+}
+
+task createPom {
+    doLast {
+        pom {
+            project pomConfig
+        }.writeTo("$buildDir/pom.xml")
+    }
 }
 
 jar {
@@ -104,6 +111,10 @@ uploadArchives {
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                 authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom {
+                project pomConfig
             }
         }
     }
