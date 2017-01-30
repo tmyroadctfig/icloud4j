@@ -62,6 +62,7 @@ public class UbiquityNode
      * @param iCloudService the iCloud service.
      * @param ubiquityService the service reference.
      * @param id the ID.
+     * @param nodeDetails the details for the node.
      */
     public UbiquityNode(ICloudService iCloudService, UbiquityService ubiquityService, String id, UbiquityNodeDetails nodeDetails)
     {

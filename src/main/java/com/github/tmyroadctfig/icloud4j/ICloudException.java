@@ -49,6 +49,9 @@ public class ICloudException extends RuntimeException
 
     /**
      * Creates a new exception wrapping the original cause.
+     *
+     * @param response the HTTP response.
+     * @param errorMap the map of error values returned by iCloud.
      */
     public ICloudException(HttpResponse response, Map<String, Object> errorMap)
     {

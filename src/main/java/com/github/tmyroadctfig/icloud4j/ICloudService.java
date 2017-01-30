@@ -154,6 +154,7 @@ public class ICloudService implements java.io.Closeable
      *
      * @param username the username.
      * @param password the password.
+     * @return the map of values returned by iCloud.
      */
     public Map<String, Object> authenticate(@Nonnull String username, @Nonnull char[] password)
     {
@@ -169,6 +170,7 @@ public class ICloudService implements java.io.Closeable
      * Attempts to log in to iCloud.
      *
      * @param params the map of parameters to pass to login.
+     * @return the map of values returned by iCloud.
      */
     public Map<String, Object> authenticate(Map<String, Object> params)
     {
