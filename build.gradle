@@ -1,10 +1,11 @@
-group 'tmyroadctfig.icloud4j'
-version '1.5'
+group 'com.github.tmyroadctfig'
+version '1.6'
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 sourceCompatibility = 1.8
 
@@ -33,6 +34,29 @@ task createPom << {
             groupId "$project.group"
             artifactId "$project.name"
             version "$version"
+
+            name 'iCloud4j'
+            packaging 'jar'
+            url 'https://github.com/tmyroadctfig/icloud4j'
+
+            scm {
+                connection 'scm:git:https://github.com/tmyroadctfig/icloud4j.git'
+            }
+
+            licenses {
+                license {
+                    name 'The Apache License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'tmyroadctfig'
+                    name 'Luke Quinane'
+                    email 'luke.quinane@gmail.com'
+                }
+            }
         }
     }.writeTo("$buildDir/pom.xml")
 }
@@ -48,5 +72,39 @@ jar {
         attributes(
             "Implementation-Title": "iCloud4j"
         )
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+        }
     }
 }
