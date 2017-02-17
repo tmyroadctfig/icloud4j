@@ -53,8 +53,9 @@ public class ICloudException extends RuntimeException
      * @param response the HTTP response.
      * @param errorMap the map of error values returned by iCloud.
      */
-    public ICloudException(HttpResponse response, Map<String, Object> errorMap)
+    public ICloudException(HttpResponse response, Map<String, Object> errorMap, Throwable cause)
     {
+        super(cause);
         this.errorMap = ImmutableMap.copyOf(errorMap);
         this.statusLine = response.getStatusLine();
         this.headers = Arrays

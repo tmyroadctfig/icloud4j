@@ -16,9 +16,10 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.TrustedDevice;
 import org.apache.http.StatusLine;
 import org.apache.log4j.BasicConfigurator;
+
+import com.github.tmyroadctfig.icloud4j.models.iCloudService.TrustedDevice;
 
 import java.util.List;
 

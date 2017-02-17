@@ -14,22 +14,19 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.iCloudService;
 
 /**
- * Details for a ubiquity node.
+ * A trusted device response sent back as part of the two-factor authentication process.
  *
  * @author Luke Quinane
  */
-public class UbiquityNodeDetails
+public class TrustedDeviceResponse extends TrustedDevice
 {
-    public long peer_id;
-    public boolean in_cloud;
-    public String item_id;
-    public String name;
-    public String parent_item_id;
-    public String type;
-    public String modified;
-    public long size;
-    public String change_id;
+    /**
+     * The two-factor verification code.
+     */
+    public String verificationCode;
+
+    public boolean trustBrowser;
 }

@@ -14,15 +14,26 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService;
+
+import java.util.List;
 
 /**
- * A response from the photos service returning albums.
+ * A response from the refresh call to the 'find my iPhone' service.
+ *
+ * @author Luke Quinane
  */
-public class PhotosAlbumsResponse
-{
+public class FindMyIPhoneResponse {
     /**
-     * The list of folders returned in the response.
+     * The list of Apple devices returned in the response.
      */
-    public PhotosFolder[] folders;
+    private List<AppleDevice> content;
+
+    public List<AppleDevice> getContent() {
+        return content;
+    }
+
+    public void setContent(List<AppleDevice> content) {
+        this.content = content;
+    }
 }

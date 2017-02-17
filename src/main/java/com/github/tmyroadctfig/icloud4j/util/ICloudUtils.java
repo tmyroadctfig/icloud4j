@@ -16,25 +16,29 @@
 
 package com.github.tmyroadctfig.icloud4j.util;
 
-import com.github.tmyroadctfig.icloud4j.ICloudException;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.Map;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Map;
+import com.github.tmyroadctfig.icloud4j.ICloudException;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 /**
  * iCloud utilities.
  *
  * @author Luke Quinanne
  */
-public class ICloudUtils
-{
+public class ICloudUtils {
+
+    public static final Logger logger = Logger.getLogger(ICloudUtils.class);
+
     /**
      * Parses a JSON response from the request.
      *
@@ -45,25 +49,21 @@ public class ICloudUtils
      * @return the object.
      * @throws ICloudException if there was an error returned from the request.
      */
-    public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpPost post, Class<T> responseClass)
-    {
-        try (CloseableHttpResponse response = httpClient.execute(post))
-        {
+    public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpPost post, Class<T> responseClass) {
+        try (CloseableHttpResponse response = httpClient.execute(post)) {
             String rawResponseContent = new StringResponseHandler().handleResponse(response);
-
-            try
-            {
+            if (logger.isDebugEnabled()) {
+                logger.debug("raw JSON received (to -> " + responseClass.getSimpleName() + "): '" + rawResponseContent
+                        + "'");
+            }
+            try {
                 return new Gson().fromJson(rawResponseContent, responseClass);
-            }
-            catch (JsonSyntaxException e1)
-            {
-                //noinspection unchecked
+            } catch (JsonSyntaxException e1) {
+                // noinspection unchecked
                 Map<String, Object> errorMap = new Gson().fromJson(rawResponseContent, Map.class);
-                throw new ICloudException(response, errorMap);
+                throw new ICloudException(response, errorMap, e1);
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
@@ -78,25 +78,21 @@ public class ICloudUtils
      * @return the object.
      * @throws ICloudException if there was an error returned from the request.
      */
-    public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpGet httpGet, Class<T> responseClass)
-    {
-        try (CloseableHttpResponse response = httpClient.execute(httpGet))
-        {
+    public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpGet httpGet, Class<T> responseClass) {
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             String rawResponseContent = new StringResponseHandler().handleResponse(response);
-
-            try
-            {
+            if (logger.isDebugEnabled()) {
+                logger.debug("raw JSON received (to -> " + responseClass.getSimpleName() + "): '" + rawResponseContent
+                        + "'");
+            }
+            try {
                 return new Gson().fromJson(rawResponseContent, responseClass);
-            }
-            catch (JsonSyntaxException e1)
-            {
-                //noinspection unchecked
+            } catch (JsonSyntaxException e1) {
+                // noinspection unchecked
                 Map<String, Object> errorMap = new Gson().fromJson(rawResponseContent, Map.class);
-                throw new ICloudException(response, errorMap);
+                throw new ICloudException(response, errorMap, e1);
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }

@@ -16,20 +16,20 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.UbiquityNodeDetails;
-import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
-import com.google.common.base.Throwables;
+import java.util.Map;
+
 import org.apache.http.client.methods.HttpGet;
 
-import java.util.Map;
+import com.github.tmyroadctfig.icloud4j.models.ubiquityService.UbiquityNodeDetails;
+import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
+import com.google.common.base.Throwables;
 
 /**
  * Access to the 'ubiquity' service.
  *
  * @author Luke Quinane
  */
-public class UbiquityService
-{
+public class UbiquityService {
     /**
      * The iCloud service.
      */
@@ -45,8 +45,7 @@ public class UbiquityService
      *
      * @param iCloudService the iCloud service.
      */
-    public UbiquityService(ICloudService iCloudService)
-    {
+    public UbiquityService(ICloudService iCloudService) {
         this.iCloudService = iCloudService;
         Map<String, Object> ubiquitySettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("ubiquity");
         serviceRoot = (String) ubiquitySettings.get("url");
@@ -57,23 +56,19 @@ public class UbiquityService
      *
      * @return the root node.
      */
-    public UbiquityNode getRoot()
-    {
+    public UbiquityNode getRoot() {
         String rootId = "0";
 
-        try
-        {
+        try {
             String url = String.format("%s/ws/%s/%s/%s", serviceRoot, iCloudService.getSessionId(), "item", rootId);
             HttpGet httpGet = new HttpGet(url);
             iCloudService.populateRequestHeadersParameters(httpGet);
 
-            UbiquityNodeDetails nodeDetails =
-                ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), httpGet, UbiquityNodeDetails.class);
+            UbiquityNodeDetails nodeDetails = ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), httpGet,
+                    UbiquityNodeDetails.class);
 
             return new UbiquityNode(iCloudService, this, rootId, nodeDetails);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw Throwables.propagate(e);
         }
     }
@@ -83,8 +78,7 @@ public class UbiquityService
      *
      * @return the service URL.
      */
-    public String getServiceUrl()
-    {
+    public String getServiceUrl() {
         return serviceRoot;
     }
 }
