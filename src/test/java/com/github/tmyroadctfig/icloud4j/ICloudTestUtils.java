@@ -16,9 +16,10 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.TrustedDevice;
 import org.apache.http.StatusLine;
 import org.apache.log4j.BasicConfigurator;
+
+import com.github.tmyroadctfig.icloud4j.models.iCloudService.TrustedDevice;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class ICloudTestUtils
     {
         BasicConfigurator.configure();
     }
+    
+    private static ICloudService iCloudService;
 
     /**
      * Gets a new iCloud4j service instance from system properties.
@@ -39,7 +42,10 @@ public class ICloudTestUtils
      */
     public static ICloudService getServiceFromSystemProperties()
     {
-        ICloudService iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
+    	if(iCloudService != null){
+    		return iCloudService;
+    	}
+    	iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
 
         String username = System.getProperty("icloud4j.test.username");
         char[] password = System.getProperty("icloud4j.test.password").toCharArray();

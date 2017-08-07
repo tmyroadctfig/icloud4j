@@ -16,9 +16,10 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.TrustedDevice;
-import com.github.tmyroadctfig.icloud4j.json.TrustedDeviceResponse;
-import com.github.tmyroadctfig.icloud4j.json.TrustedDevices;
+import com.github.tmyroadctfig.icloud4j.models.iCloudService.TrustedDevice;
+import com.github.tmyroadctfig.icloud4j.models.iCloudService.TrustedDeviceResponse;
+import com.github.tmyroadctfig.icloud4j.models.iCloudService.TrustedDevices;
+import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
 import com.github.tmyroadctfig.icloud4j.util.JsonToMapResponseHandler;
 import com.github.tmyroadctfig.icloud4j.util.StringResponseHandler;
 import com.google.common.base.Strings;
@@ -235,8 +236,7 @@ public class ICloudService implements java.io.Closeable
 
             try (CloseableHttpResponse response = httpClient.execute(httpGet))
             {
-                TrustedDevices trustedDevices = new Gson().fromJson(new StringResponseHandler().handleResponse(response), TrustedDevices.class);
-
+                TrustedDevices trustedDevices = ICloudUtils.parseJsonResponse(httpClient, httpGet, TrustedDevices.class);
                 return Arrays.asList(trustedDevices.devices);
             }
         }

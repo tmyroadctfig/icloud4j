@@ -14,19 +14,17 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.iCloudService;
 
 /**
- * A trusted device response sent back as part of the two-factor authentication process.
+ * The list of trusted two-factor authentication devices.
  *
  * @author Luke Quinane
  */
-public class TrustedDeviceResponse extends TrustedDevice
+public class TrustedDevices
 {
     /**
-     * The two-factor verification code.
+     * The list of trusted devices.
      */
-    public String verificationCode;
-
-    public boolean trustBrowser;
+    public TrustedDevice[] devices;
 }

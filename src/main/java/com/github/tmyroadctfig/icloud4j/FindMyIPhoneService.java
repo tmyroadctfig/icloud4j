@@ -16,26 +16,25 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.AppleDevice;
-import com.github.tmyroadctfig.icloud4j.json.FindMyIPhoneResponse;
-import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
-import com.google.common.base.Throwables;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService.AppleDevice;
+import com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService.Content;
+import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
+import com.google.common.base.Throwables;
 
 /**
  * Access to the 'find my iPhone' service (although it returns details for Mac computers too).
  *
  * @author Luke Quinane
  */
-public class FindMyIPhoneService
-{
+public class FindMyIPhoneService {
     /**
      * The iCloud service.
      */
@@ -61,8 +60,7 @@ public class FindMyIPhoneService
      *
      * @param iCloudService the iCloud service.
      */
-    public FindMyIPhoneService(ICloudService iCloudService)
-    {
+    public FindMyIPhoneService(ICloudService iCloudService) {
         this.iCloudService = iCloudService;
         Map<String, Object> findMeSettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("findme");
         serviceRoot = (String) findMeSettings.get("url");
@@ -76,10 +74,8 @@ public class FindMyIPhoneService
      *
      * @return the list of devices.
      */
-    public List<AppleDevice> getDevices()
-    {
-        try
-        {
+    public List<Content> getDevices() {
+        try {
             URIBuilder uriBuilder = new URIBuilder(refreshUrl);
             iCloudService.populateUriParameters(uriBuilder);
             URI uri = uriBuilder.build();
@@ -90,13 +86,11 @@ public class FindMyIPhoneService
             post.setEntity(new StringEntity(requestJson, null, "UTF-8"));
             iCloudService.populateRequestHeadersParameters(post);
 
-            FindMyIPhoneResponse findMyIPhoneResponse =
-                ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), post, FindMyIPhoneResponse.class);
+            AppleDevice findMyIPhoneResponse = ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), post,
+                    AppleDevice.class);
 
-            return Arrays.asList(findMyIPhoneResponse.content);
-        }
-        catch (Exception e)
-        {
+            return findMyIPhoneResponse.getContent();
+        } catch (Exception e) {
             throw Throwables.propagate(e);
         }
     }

@@ -14,17 +14,38 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.iCloudService;
 
 /**
- * A response from the refresh call to the 'find my iPhone' service.
+ * The list of trusted two-factor authentication devices.
  *
  * @author Luke Quinane
  */
-public class FindMyIPhoneResponse
+public class TrustedDevice
 {
     /**
-     * The list of Apple devices returned in the response.
+     * The device type, e.g. "SMS".
      */
-    public AppleDevice[] content;
+    public String deviceType;
+
+    /**
+     * The area code.
+     */
+    public String areaCode;
+
+    /**
+     * The obfuscated phone number. E.g. "*******00".
+     */
+    public String phoneNumber;
+
+    /**
+     * The device ID, e.g. "1".
+     */
+    public String deviceId;
+
+    @Override
+    public String toString()
+    {
+        return String.format("[%s] %s: (%s) %s", deviceId, deviceType, areaCode, phoneNumber);
+    }
 }
