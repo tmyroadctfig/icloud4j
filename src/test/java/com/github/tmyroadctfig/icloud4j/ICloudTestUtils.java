@@ -32,6 +32,8 @@ public class ICloudTestUtils
     {
         BasicConfigurator.configure();
     }
+    
+    private static ICloudService iCloudService;
 
     /**
      * Gets a new iCloud4j service instance from system properties.
@@ -40,7 +42,10 @@ public class ICloudTestUtils
      */
     public static ICloudService getServiceFromSystemProperties()
     {
-        ICloudService iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
+    	if(iCloudService != null){
+    		return iCloudService;
+    	}
+    	iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
 
         String username = System.getProperty("icloud4j.test.username");
         char[] password = System.getProperty("icloud4j.test.password").toCharArray();
