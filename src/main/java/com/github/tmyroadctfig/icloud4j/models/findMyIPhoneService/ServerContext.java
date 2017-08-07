@@ -86,7 +86,7 @@ public class ServerContext {
     private String info;
     @SerializedName("prefsUpdateTime")
     @Expose
-    private Integer prefsUpdateTime;
+    private Long prefsUpdateTime;
     @SerializedName("useAuthWidget")
     @Expose
     private Boolean useAuthWidget;
@@ -98,7 +98,7 @@ public class ServerContext {
     private Boolean enable2FAFamilyRemove;
     @SerializedName("serverTimestamp")
     @Expose
-    private Integer serverTimestamp;
+    private Long serverTimestamp;
     @SerializedName("macCount")
     @Expose
     private Integer macCount;
@@ -265,11 +265,11 @@ public class ServerContext {
         this.info = info;
     }
 
-    public Integer getPrefsUpdateTime() {
+    public Long getPrefsUpdateTime() {
         return prefsUpdateTime;
     }
 
-    public void setPrefsUpdateTime(Integer prefsUpdateTime) {
+    public void setPrefsUpdateTime(Long prefsUpdateTime) {
         this.prefsUpdateTime = prefsUpdateTime;
     }
 
@@ -297,11 +297,11 @@ public class ServerContext {
         this.enable2FAFamilyRemove = enable2FAFamilyRemove;
     }
 
-    public Integer getServerTimestamp() {
+    public Long getServerTimestamp() {
         return serverTimestamp;
     }
 
-    public void setServerTimestamp(Integer serverTimestamp) {
+    public void setServerTimestamp(Long serverTimestamp) {
         this.serverTimestamp = serverTimestamp;
     }
 

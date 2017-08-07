@@ -26,13 +26,13 @@ public class Timezone {
 
     @SerializedName("currentOffset")
     @Expose
-    private Integer currentOffset;
+    private Long currentOffset;
     @SerializedName("previousTransition")
     @Expose
-    private Integer previousTransition;
+    private Long previousTransition;
     @SerializedName("previousOffset")
     @Expose
-    private Integer previousOffset;
+    private Long previousOffset;
     @SerializedName("tzCurrentName")
     @Expose
     private String tzCurrentName;
@@ -40,27 +40,27 @@ public class Timezone {
     @Expose
     private String tzName;
 
-    public Integer getCurrentOffset() {
+    public Long getCurrentOffset() {
         return currentOffset;
     }
 
-    public void setCurrentOffset(Integer currentOffset) {
+    public void setCurrentOffset(Long currentOffset) {
         this.currentOffset = currentOffset;
     }
 
-    public Integer getPreviousTransition() {
+    public Long getPreviousTransition() {
         return previousTransition;
     }
 
-    public void setPreviousTransition(Integer previousTransition) {
+    public void setPreviousTransition(Long previousTransition) {
         this.previousTransition = previousTransition;
     }
 
-    public Integer getPreviousOffset() {
+    public Long getPreviousOffset() {
         return previousOffset;
     }
 
-    public void setPreviousOffset(Integer previousOffset) {
+    public void setPreviousOffset(Long previousOffset) {
         this.previousOffset = previousOffset;
     }
 
