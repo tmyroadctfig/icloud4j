@@ -80,6 +80,7 @@ public class ICloudUtils {
      */
     public static <T> T parseJsonResponse(CloseableHttpClient httpClient, HttpGet httpGet, Class<T> responseClass) {
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+        	//FIXME check for bad gateway here
             String rawResponseContent = new StringResponseHandler().handleResponse(response);
             if (logger.isDebugEnabled()) {
                 logger.debug("raw JSON received (to -> " + responseClass.getSimpleName() + "): '" + rawResponseContent
