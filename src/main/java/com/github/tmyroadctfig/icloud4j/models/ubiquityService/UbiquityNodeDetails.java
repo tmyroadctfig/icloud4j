@@ -33,36 +33,47 @@ public class UbiquityNodeDetails {
     @SerializedName("in_cloud")
     @Expose
     private Boolean inCloud;
+    
     @SerializedName("size")
     @Expose
     private Integer size;
+    
     @SerializedName("item_id")
     @Expose
     private String itemId;
+    
     @SerializedName("parent_item_id")
     @Expose
     private String parentItemId;
+    
     @SerializedName("change_id")
     @Expose
     private String changeId;
+    
     @SerializedName("name")
     @Expose
     private String name;
+    
     @SerializedName("modified")
     @Expose
     private String modified;
+    
     @SerializedName("peer_name")
     @Expose
     private String peerName;
+    
     @SerializedName("type")
     @Expose
     private String type;
+    
     @SerializedName("peer_id")
     @Expose
     private Integer peerId;
+    
     @SerializedName("signature")
     @Expose
     private String signature;
+    
     @SerializedName("conflicted")
     @Expose
     private Boolean conflicted;

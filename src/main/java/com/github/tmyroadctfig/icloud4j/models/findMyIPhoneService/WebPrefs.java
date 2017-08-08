@@ -21,8 +21,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class WebPrefs {
+/**
+ * Model for {@link WebPrefs} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
+public class WebPrefs 
+{
 
     @SerializedName("id")
     @Expose
@@ -31,38 +37,47 @@ public class WebPrefs {
     @Expose
     private String selectedDeviceId;
 
-    public String getId() {
+    public String getId() 
+    {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) 
+    {
         this.id = id;
     }
 
-    public String getSelectedDeviceId() {
+    public String getSelectedDeviceId() 
+    {
         return selectedDeviceId;
     }
 
-    public void setSelectedDeviceId(String selectedDeviceId) {
+    public void setSelectedDeviceId(String selectedDeviceId) 
+    {
         this.selectedDeviceId = selectedDeviceId;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(id).append(selectedDeviceId).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof WebPrefs) == false) {
+        if ((other instanceof WebPrefs) == false) 
+        {
             return false;
         }
         WebPrefs rhs = ((WebPrefs) other);

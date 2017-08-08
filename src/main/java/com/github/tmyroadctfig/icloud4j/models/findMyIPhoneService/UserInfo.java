@@ -21,71 +21,94 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class UserInfo {
+/**
+ * Model for {@link UserInfo} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
+public class UserInfo 
+{
 
     @SerializedName("firstName")
     @Expose
     private String firstName;
+    
     @SerializedName("lastName")
     @Expose
     private String lastName;
+    
+    //FIXME replace object by model-class
     @SerializedName("membersInfo")
     @Expose
     private Object membersInfo;
+    
     @SerializedName("hasMembers")
     @Expose
     private Boolean hasMembers;
 
-    public String getFirstName() {
+    public String getFirstName() 
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) 
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName() 
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) 
+    {
         this.lastName = lastName;
     }
 
-    public Object getMembersInfo() {
+    public Object getMembersInfo() 
+    {
         return membersInfo;
     }
 
-    public void setMembersInfo(Object membersInfo) {
+    public void setMembersInfo(Object membersInfo) 
+    {
         this.membersInfo = membersInfo;
     }
 
-    public Boolean getHasMembers() {
+    public Boolean getHasMembers() 
+    {
         return hasMembers;
     }
 
-    public void setHasMembers(Boolean hasMembers) {
+    public void setHasMembers(Boolean hasMembers) 
+    {
         this.hasMembers = hasMembers;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(firstName).append(lastName).append(membersInfo).append(hasMembers)
                 .toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof UserInfo) == false) {
+        if ((other instanceof UserInfo) == false) 
+        {
             return false;
         }
         UserInfo rhs = ((UserInfo) other);

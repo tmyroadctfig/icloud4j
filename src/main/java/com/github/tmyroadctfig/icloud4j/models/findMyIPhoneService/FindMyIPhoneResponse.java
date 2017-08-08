@@ -23,17 +23,28 @@ import java.util.List;
  *
  * @author Luke Quinane
  */
-public class FindMyIPhoneResponse {
+public class FindMyIPhoneResponse 
+{
     /**
      * The list of Apple devices returned in the response.
      */
     private List<AppleDevice> content;
 
-    public List<AppleDevice> getContent() {
+    /**
+     * returns the list of Apple devices returned in the response.
+     * @return
+     */
+    public List<AppleDevice> getContent() 
+    {
         return content;
     }
 
-    public void setContent(List<AppleDevice> content) {
+    /**
+     * set the list of Apple devices.
+     * @param content {@link List} of {@link AppleDevice}
+     */
+    public void setContent(List<AppleDevice> content) 
+    {
         this.content = content;
     }
 }

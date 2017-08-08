@@ -23,6 +23,7 @@ package com.github.tmyroadctfig.icloud4j.models.iCloudService;
  */
 public class TrustedDevices
 {
+	
     /**
      * The list of trusted devices.
      */

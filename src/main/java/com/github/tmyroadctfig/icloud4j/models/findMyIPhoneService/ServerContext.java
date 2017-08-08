@@ -23,7 +23,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Model for ServerContext used for JSON parsing.
+ * Model for {@link ServerContext} used for JSON parsing.
  *
  * @author Jan Bastgen
  *
@@ -33,341 +33,432 @@ public class ServerContext {
     @SerializedName("minCallbackIntervalInMS")
     @Expose
     private Integer minCallbackIntervalInMS;
+    
     @SerializedName("enable2FAFamilyActions")
     @Expose
     private Boolean enable2FAFamilyActions;
+    
     @SerializedName("preferredLanguage")
     @Expose
     private String preferredLanguage;
+    
     @SerializedName("lastSessionExtensionTime")
     @Expose
     private Object lastSessionExtensionTime;
+    
     @SerializedName("validRegion")
     @Expose
     private Boolean validRegion;
+    
     @SerializedName("enableMapStats")
     @Expose
     private Boolean enableMapStats;
+    
     @SerializedName("callbackIntervalInMS")
     @Expose
     private Integer callbackIntervalInMS;
+    
     @SerializedName("timezone")
     @Expose
     private Timezone timezone;
+    
     @SerializedName("authToken")
     @Expose
     private Object authToken;
+    
     @SerializedName("maxCallbackIntervalInMS")
     @Expose
     private Integer maxCallbackIntervalInMS;
+    
     @SerializedName("classicUser")
     @Expose
     private Boolean classicUser;
+    
     @SerializedName("isHSA")
     @Expose
     private Boolean isHSA;
+    
     @SerializedName("trackInfoCacheDurationInSecs")
     @Expose
     private Integer trackInfoCacheDurationInSecs;
+    
     @SerializedName("imageBaseUrl")
     @Expose
     private String imageBaseUrl;
+    
     @SerializedName("minTrackLocThresholdInMts")
     @Expose
     private Integer minTrackLocThresholdInMts;
+    
     @SerializedName("maxLocatingTime")
     @Expose
     private Integer maxLocatingTime;
+    
     @SerializedName("sessionLifespan")
     @Expose
     private Integer sessionLifespan;
+    
     @SerializedName("info")
     @Expose
     private String info;
+    
     @SerializedName("prefsUpdateTime")
     @Expose
     private Long prefsUpdateTime;
+    
     @SerializedName("useAuthWidget")
     @Expose
     private Boolean useAuthWidget;
+    
     @SerializedName("clientId")
     @Expose
     private String clientId;
+    
     @SerializedName("enable2FAFamilyRemove")
     @Expose
     private Boolean enable2FAFamilyRemove;
+    
     @SerializedName("serverTimestamp")
     @Expose
     private Long serverTimestamp;
+    
     @SerializedName("macCount")
     @Expose
     private Integer macCount;
+    
     @SerializedName("deviceLoadStatus")
     @Expose
     private String deviceLoadStatus;
+    
     @SerializedName("maxDeviceLoadTime")
     @Expose
     private Integer maxDeviceLoadTime;
+    
     @SerializedName("prsId")
     @Expose
     private Integer prsId;
+    
     @SerializedName("showSllNow")
     @Expose
     private Boolean showSllNow;
+    
     @SerializedName("cloudUser")
     @Expose
     private Boolean cloudUser;
+    
     @SerializedName("enable2FAErase")
     @Expose
     private Boolean enable2FAErase;
 
-    public Integer getMinCallbackIntervalInMS() {
+    public Integer getMinCallbackIntervalInMS() 
+    {
         return minCallbackIntervalInMS;
     }
 
-    public void setMinCallbackIntervalInMS(Integer minCallbackIntervalInMS) {
+    public void setMinCallbackIntervalInMS(Integer minCallbackIntervalInMS) 
+    {
         this.minCallbackIntervalInMS = minCallbackIntervalInMS;
     }
 
-    public Boolean getEnable2FAFamilyActions() {
+    public Boolean getEnable2FAFamilyActions() 
+    {
         return enable2FAFamilyActions;
     }
 
-    public void setEnable2FAFamilyActions(Boolean enable2FAFamilyActions) {
+    public void setEnable2FAFamilyActions(Boolean enable2FAFamilyActions) 
+    {
         this.enable2FAFamilyActions = enable2FAFamilyActions;
     }
 
-    public String getPreferredLanguage() {
+    public String getPreferredLanguage() 
+    {
         return preferredLanguage;
     }
 
-    public void setPreferredLanguage(String preferredLanguage) {
+    public void setPreferredLanguage(String preferredLanguage) 
+    {
         this.preferredLanguage = preferredLanguage;
     }
 
-    public Object getLastSessionExtensionTime() {
+    public Object getLastSessionExtensionTime() 
+    {
         return lastSessionExtensionTime;
     }
 
-    public void setLastSessionExtensionTime(Object lastSessionExtensionTime) {
+    public void setLastSessionExtensionTime(Object lastSessionExtensionTime) 
+    {
         this.lastSessionExtensionTime = lastSessionExtensionTime;
     }
 
-    public Boolean getValidRegion() {
+    public Boolean getValidRegion() 
+    {
         return validRegion;
     }
 
-    public void setValidRegion(Boolean validRegion) {
+    public void setValidRegion(Boolean validRegion) 
+    {
         this.validRegion = validRegion;
     }
 
-    public Boolean getEnableMapStats() {
+    public Boolean getEnableMapStats() 
+    {
         return enableMapStats;
     }
 
-    public void setEnableMapStats(Boolean enableMapStats) {
+    public void setEnableMapStats(Boolean enableMapStats) 
+    {
         this.enableMapStats = enableMapStats;
     }
 
-    public Integer getCallbackIntervalInMS() {
+    public Integer getCallbackIntervalInMS() 
+    {
         return callbackIntervalInMS;
     }
 
-    public void setCallbackIntervalInMS(Integer callbackIntervalInMS) {
+    public void setCallbackIntervalInMS(Integer callbackIntervalInMS) 
+    {
         this.callbackIntervalInMS = callbackIntervalInMS;
     }
 
-    public Timezone getTimezone() {
+    public Timezone getTimezone() 
+    {
         return timezone;
     }
 
-    public void setTimezone(Timezone timezone) {
+    public void setTimezone(Timezone timezone) 
+    {
         this.timezone = timezone;
     }
 
-    public Object getAuthToken() {
+    public Object getAuthToken() 
+    {
         return authToken;
     }
 
-    public void setAuthToken(Object authToken) {
+    public void setAuthToken(Object authToken) 
+    {
         this.authToken = authToken;
     }
 
-    public Integer getMaxCallbackIntervalInMS() {
+    public Integer getMaxCallbackIntervalInMS() 
+    {
         return maxCallbackIntervalInMS;
     }
 
-    public void setMaxCallbackIntervalInMS(Integer maxCallbackIntervalInMS) {
+    public void setMaxCallbackIntervalInMS(Integer maxCallbackIntervalInMS) 
+    {
         this.maxCallbackIntervalInMS = maxCallbackIntervalInMS;
     }
 
-    public Boolean getClassicUser() {
+    public Boolean getClassicUser() 
+    {
         return classicUser;
     }
 
-    public void setClassicUser(Boolean classicUser) {
+    public void setClassicUser(Boolean classicUser) 
+    {
         this.classicUser = classicUser;
     }
 
-    public Boolean getIsHSA() {
+    public Boolean getIsHSA() 
+    {
         return isHSA;
     }
 
-    public void setIsHSA(Boolean isHSA) {
+    public void setIsHSA(Boolean isHSA) 
+    {
         this.isHSA = isHSA;
     }
 
-    public Integer getTrackInfoCacheDurationInSecs() {
+    public Integer getTrackInfoCacheDurationInSecs() 
+    {
         return trackInfoCacheDurationInSecs;
     }
 
-    public void setTrackInfoCacheDurationInSecs(Integer trackInfoCacheDurationInSecs) {
+    public void setTrackInfoCacheDurationInSecs(Integer trackInfoCacheDurationInSecs) 
+    {
         this.trackInfoCacheDurationInSecs = trackInfoCacheDurationInSecs;
     }
 
-    public String getImageBaseUrl() {
+    public String getImageBaseUrl() 
+    {
         return imageBaseUrl;
     }
 
-    public void setImageBaseUrl(String imageBaseUrl) {
+    public void setImageBaseUrl(String imageBaseUrl) 
+    {
         this.imageBaseUrl = imageBaseUrl;
     }
 
-    public Integer getMinTrackLocThresholdInMts() {
+    public Integer getMinTrackLocThresholdInMts() 
+    {
         return minTrackLocThresholdInMts;
     }
 
-    public void setMinTrackLocThresholdInMts(Integer minTrackLocThresholdInMts) {
+    public void setMinTrackLocThresholdInMts(Integer minTrackLocThresholdInMts) 
+    {
         this.minTrackLocThresholdInMts = minTrackLocThresholdInMts;
     }
 
-    public Integer getMaxLocatingTime() {
+    public Integer getMaxLocatingTime() 
+    {
         return maxLocatingTime;
     }
 
-    public void setMaxLocatingTime(Integer maxLocatingTime) {
+    public void setMaxLocatingTime(Integer maxLocatingTime) 
+    {
         this.maxLocatingTime = maxLocatingTime;
     }
 
-    public Integer getSessionLifespan() {
+    public Integer getSessionLifespan() 
+    {
         return sessionLifespan;
     }
 
-    public void setSessionLifespan(Integer sessionLifespan) {
+    public void setSessionLifespan(Integer sessionLifespan) 
+    {
         this.sessionLifespan = sessionLifespan;
     }
 
-    public String getInfo() {
+    public String getInfo() 
+    {
         return info;
     }
 
-    public void setInfo(String info) {
+    public void setInfo(String info) 
+    {
         this.info = info;
     }
 
-    public Long getPrefsUpdateTime() {
+    public Long getPrefsUpdateTime() 
+    {
         return prefsUpdateTime;
     }
 
-    public void setPrefsUpdateTime(Long prefsUpdateTime) {
+    public void setPrefsUpdateTime(Long prefsUpdateTime) 
+    {
         this.prefsUpdateTime = prefsUpdateTime;
     }
 
-    public Boolean getUseAuthWidget() {
+    public Boolean getUseAuthWidget() 
+    {
         return useAuthWidget;
     }
 
-    public void setUseAuthWidget(Boolean useAuthWidget) {
+    public void setUseAuthWidget(Boolean useAuthWidget) 
+    {
         this.useAuthWidget = useAuthWidget;
     }
 
-    public String getClientId() {
+    public String getClientId() 
+    {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(String clientId) 
+    {
         this.clientId = clientId;
     }
 
-    public Boolean getEnable2FAFamilyRemove() {
+    public Boolean getEnable2FAFamilyRemove() 
+    {
         return enable2FAFamilyRemove;
     }
 
-    public void setEnable2FAFamilyRemove(Boolean enable2FAFamilyRemove) {
+    public void setEnable2FAFamilyRemove(Boolean enable2FAFamilyRemove) 
+    {
         this.enable2FAFamilyRemove = enable2FAFamilyRemove;
     }
 
-    public Long getServerTimestamp() {
+    public Long getServerTimestamp() 
+    {
         return serverTimestamp;
     }
 
-    public void setServerTimestamp(Long serverTimestamp) {
+    public void setServerTimestamp(Long serverTimestamp) 
+    {
         this.serverTimestamp = serverTimestamp;
     }
 
-    public Integer getMacCount() {
+    public Integer getMacCount() 
+    {
         return macCount;
     }
 
-    public void setMacCount(Integer macCount) {
+    public void setMacCount(Integer macCount) 
+    {
         this.macCount = macCount;
     }
 
-    public String getDeviceLoadStatus() {
+    public String getDeviceLoadStatus() 
+    {
         return deviceLoadStatus;
     }
 
-    public void setDeviceLoadStatus(String deviceLoadStatus) {
+    public void setDeviceLoadStatus(String deviceLoadStatus) 
+    {
         this.deviceLoadStatus = deviceLoadStatus;
     }
 
-    public Integer getMaxDeviceLoadTime() {
+    public Integer getMaxDeviceLoadTime() 
+    {
         return maxDeviceLoadTime;
     }
 
-    public void setMaxDeviceLoadTime(Integer maxDeviceLoadTime) {
+    public void setMaxDeviceLoadTime(Integer maxDeviceLoadTime) 
+    {
         this.maxDeviceLoadTime = maxDeviceLoadTime;
     }
 
-    public Integer getPrsId() {
+    public Integer getPrsId() 
+    {
         return prsId;
     }
 
-    public void setPrsId(Integer prsId) {
+    public void setPrsId(Integer prsId) 
+    {
         this.prsId = prsId;
     }
 
-    public Boolean getShowSllNow() {
+    public Boolean getShowSllNow() 
+    {
         return showSllNow;
     }
 
-    public void setShowSllNow(Boolean showSllNow) {
+    public void setShowSllNow(Boolean showSllNow) 
+    {
         this.showSllNow = showSllNow;
     }
 
-    public Boolean getCloudUser() {
+    public Boolean getCloudUser() 
+    {
         return cloudUser;
     }
 
-    public void setCloudUser(Boolean cloudUser) {
+    public void setCloudUser(Boolean cloudUser) 
+    {
         this.cloudUser = cloudUser;
     }
 
-    public Boolean getEnable2FAErase() {
+    public Boolean getEnable2FAErase() 
+    {
         return enable2FAErase;
     }
 
-    public void setEnable2FAErase(Boolean enable2FAErase) {
+    public void setEnable2FAErase(Boolean enable2FAErase) 
+    {
         this.enable2FAErase = enable2FAErase;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(minCallbackIntervalInMS).append(enable2FAFamilyActions)
                 .append(preferredLanguage).append(lastSessionExtensionTime).append(validRegion).append(enableMapStats)
                 .append(callbackIntervalInMS).append(timezone).append(authToken).append(maxCallbackIntervalInMS)
@@ -379,11 +470,14 @@ public class ServerContext {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof ServerContext) == false) {
+        if ((other instanceof ServerContext) == false) 
+        {
             return false;
         }
         ServerContext rhs = ((ServerContext) other);

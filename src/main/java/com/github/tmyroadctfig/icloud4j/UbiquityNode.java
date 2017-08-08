@@ -34,7 +34,8 @@ import com.google.common.base.Throwables;
  *
  * @author Luke Quinane
  */
-public class UbiquityNode {
+public class UbiquityNode 
+{
     /**
      * The iCloud service.
      */
@@ -64,7 +65,8 @@ public class UbiquityNode {
      * @param nodeDetails the details for the node.
      */
     public UbiquityNode(ICloudService iCloudService, UbiquityService ubiquityService, String id,
-            UbiquityNodeDetails nodeDetails) {
+            UbiquityNodeDetails nodeDetails) 
+    {
         this.iCloudService = iCloudService;
         this.ubiquityService = ubiquityService;
         this.id = id;
@@ -76,8 +78,10 @@ public class UbiquityNode {
      *
      * @return the children.
      */
-    public List<UbiquityNode> getChildren() {
-        try {
+    public List<UbiquityNode> getChildren() 
+    {
+        try 
+        {
             String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(),
                     "parent", id);
             HttpGet httpGet = new HttpGet(url);
@@ -89,7 +93,9 @@ public class UbiquityNode {
             return getChildrenResponse.getItemList().stream()
                     .map(item -> new UbiquityNode(iCloudService, ubiquityService, item.getItemId(), item))
                     .collect(Collectors.toList());
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             throw Throwables.propagate(e);
         }
     }
@@ -99,17 +105,22 @@ public class UbiquityNode {
      *
      * @param outputStream the output stream to write to.
      */
-    public void downloadFileData(OutputStream outputStream) {
-        try {
+    public void downloadFileData(OutputStream outputStream) 
+    {
+        try 
+        {
             String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(),
                     "file", id);
             HttpGet httpGet = new HttpGet(url);
             iCloudService.populateRequestHeadersParameters(httpGet);
 
-            try (InputStream inputStream = iCloudService.getHttpClient().execute(httpGet).getEntity().getContent()) {
+            try (InputStream inputStream = iCloudService.getHttpClient().execute(httpGet).getEntity().getContent()) 
+            {
                 IOUtils.copyLarge(inputStream, outputStream, new byte[0x10000]);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) 
+        {
             throw Throwables.propagate(e);
         }
     }
@@ -119,7 +130,8 @@ public class UbiquityNode {
      *
      * @return the type.
      */
-    public String getType() {
+    public String getType() 
+    {
         return nodeDetails.getType();
     }
 
@@ -128,12 +140,14 @@ public class UbiquityNode {
      *
      * @return th details.
      */
-    public UbiquityNodeDetails getNodeDetails() {
+    public UbiquityNodeDetails getNodeDetails() 
+    {
         return nodeDetails;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return String.format("u-node:[%s %s '%s']", id, nodeDetails.getType(), nodeDetails.getName());
     }
 }

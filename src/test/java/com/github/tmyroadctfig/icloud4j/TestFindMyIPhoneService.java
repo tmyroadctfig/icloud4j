@@ -31,6 +31,7 @@ import com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService.Content;
  * Tests for {@link FindMyIPhoneService}.
  */
 public class TestFindMyIPhoneService {
+	
     @Test
     public void testDevices() {
         // Arrange
@@ -43,8 +44,10 @@ public class TestFindMyIPhoneService {
         // Assert
         assertThat(devices.isEmpty(), is(false));
 
-        for (Content device : devices) {
+        for (Content device : devices) 
+        {
             assertNotNull(device);
         }
     }
+    
 }

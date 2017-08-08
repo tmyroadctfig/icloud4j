@@ -21,82 +21,107 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class Timezone {
+/**
+ * Model for {@link Timezone} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
+public class Timezone 
+{
 
     @SerializedName("currentOffset")
     @Expose
     private Long currentOffset;
+    
     @SerializedName("previousTransition")
     @Expose
     private Long previousTransition;
+    
     @SerializedName("previousOffset")
     @Expose
     private Long previousOffset;
+    
     @SerializedName("tzCurrentName")
     @Expose
     private String tzCurrentName;
+    
     @SerializedName("tzName")
     @Expose
     private String tzName;
 
-    public Long getCurrentOffset() {
+    public Long getCurrentOffset() 
+    {
         return currentOffset;
     }
 
-    public void setCurrentOffset(Long currentOffset) {
+    public void setCurrentOffset(Long currentOffset) 
+    {
         this.currentOffset = currentOffset;
     }
 
-    public Long getPreviousTransition() {
+    public Long getPreviousTransition() 
+    {
         return previousTransition;
     }
 
-    public void setPreviousTransition(Long previousTransition) {
+    public void setPreviousTransition(Long previousTransition) 
+    {
         this.previousTransition = previousTransition;
     }
 
-    public Long getPreviousOffset() {
+    public Long getPreviousOffset() 
+    {
         return previousOffset;
     }
 
-    public void setPreviousOffset(Long previousOffset) {
+    public void setPreviousOffset(Long previousOffset) 
+    {
         this.previousOffset = previousOffset;
     }
 
-    public String getTzCurrentName() {
+    public String getTzCurrentName() 
+    {
         return tzCurrentName;
     }
 
-    public void setTzCurrentName(String tzCurrentName) {
+    public void setTzCurrentName(String tzCurrentName) 
+    {
         this.tzCurrentName = tzCurrentName;
     }
 
-    public String getTzName() {
+    public String getTzName() 
+    {
         return tzName;
     }
 
-    public void setTzName(String tzName) {
+    public void setTzName(String tzName) 
+    {
         this.tzName = tzName;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(currentOffset).append(previousTransition).append(previousOffset)
                 .append(tzCurrentName).append(tzName).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof Timezone) == false) {
+        if ((other instanceof Timezone) == false) 
+        {
             return false;
         }
         Timezone rhs = ((Timezone) other);

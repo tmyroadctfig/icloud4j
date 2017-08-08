@@ -23,39 +23,54 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+/**
+ * Model for {@link PhotosFolder} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
 public class PhotosFolder {
 
     @SerializedName("contentsType")
     @Expose
     private String contentsType;
+    
     @SerializedName("childFolderIds")
     @Expose
     private List<String> childFolderIds = null;
+    
     @SerializedName("type")
     @Expose
     private String type;
+    
     @SerializedName("serverId")
     @Expose
     private String serverId;
+    
     @SerializedName("isServerGenerated")
     @Expose
     private Boolean isServerGenerated;
+    
     @SerializedName("keyAssetClientId")
     @Expose
     private Object keyAssetClientId;
+    
     @SerializedName("dateRange")
     @Expose
     private Object dateRange;
+    
     @SerializedName("childAssetsBinaryFeed")
     @Expose
     private String childAssetsBinaryFeed;
+    
     @SerializedName("parentServerId")
     @Expose
     private String parentServerId;
+    
     @SerializedName("etag")
     @Expose
     private String etag;
+    
     @SerializedName("title")
     @Expose
     private String title;

@@ -21,37 +21,50 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class UserPreferences {
+/**
+ * Model for {@link UserPreferences} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
+public class UserPreferences 
+{
 
     @SerializedName("webPrefs")
     @Expose
     private WebPrefs webPrefs;
 
-    public WebPrefs getWebPrefs() {
+    public WebPrefs getWebPrefs() 
+    {
         return webPrefs;
     }
 
-    public void setWebPrefs(WebPrefs webPrefs) {
+    public void setWebPrefs(WebPrefs webPrefs) 
+    {
         this.webPrefs = webPrefs;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(webPrefs).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof UserPreferences) == false) {
+        if ((other instanceof UserPreferences) == false) 
+        {
             return false;
         }
         UserPreferences rhs = ((UserPreferences) other);

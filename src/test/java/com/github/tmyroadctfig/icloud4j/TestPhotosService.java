@@ -29,6 +29,7 @@ import com.github.tmyroadctfig.icloud4j.models.photosService.PhotosFolder;
  * Tests for {@link PhotosService}.
  */
 public class TestPhotosService {
+	
     @Test
     public void testDevices() {
         // Arrange
@@ -41,4 +42,5 @@ public class TestPhotosService {
         // Assert
         assertThat(albums.isEmpty(), is(false));
     }
+    
 }

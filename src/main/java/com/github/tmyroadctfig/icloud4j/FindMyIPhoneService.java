@@ -34,7 +34,8 @@ import com.google.common.base.Throwables;
  *
  * @author Luke Quinane
  */
-public class FindMyIPhoneService {
+public class FindMyIPhoneService 
+{
     /**
      * The iCloud service.
      */
@@ -60,7 +61,8 @@ public class FindMyIPhoneService {
      *
      * @param iCloudService the iCloud service.
      */
-    public FindMyIPhoneService(ICloudService iCloudService) {
+    public FindMyIPhoneService(ICloudService iCloudService) 
+    {
         this.iCloudService = iCloudService;
         Map<String, Object> findMeSettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("findme");
         serviceRoot = (String) findMeSettings.get("url");
@@ -74,8 +76,10 @@ public class FindMyIPhoneService {
      *
      * @return the list of devices.
      */
-    public List<Content> getDevices() {
-        try {
+    public List<Content> getDevices() 
+    {
+        try 
+        {
             URIBuilder uriBuilder = new URIBuilder(refreshUrl);
             iCloudService.populateUriParameters(uriBuilder);
             URI uri = uriBuilder.build();
@@ -90,7 +94,9 @@ public class FindMyIPhoneService {
                     AppleDevice.class);
 
             return findMyIPhoneResponse.getContent();
-        } catch (Exception e) {
+        }
+        catch (Exception e) 
+        {
             throw Throwables.propagate(e);
         }
     }

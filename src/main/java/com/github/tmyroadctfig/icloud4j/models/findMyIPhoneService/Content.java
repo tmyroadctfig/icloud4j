@@ -23,468 +23,598 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class Content {
+/**
+ * Model for {@link Content} used for JSON parsing.
+ *
+ * @author Jan Bastgen
+ *
+ */
+public class Content 
+{
 
     @SerializedName("msg")
     @Expose
     private Object msg;
+    
     @SerializedName("canWipeAfterLock")
     @Expose
     private Boolean canWipeAfterLock;
+    
     @SerializedName("wipeInProgress")
     @Expose
     private Boolean wipeInProgress;
+    
     @SerializedName("lostModeEnabled")
     @Expose
     private Boolean lostModeEnabled;
+    
     @SerializedName("activationLocked")
     @Expose
     private Boolean activationLocked;
+    
     @SerializedName("passcodeLength")
     @Expose
     private Integer passcodeLength;
+    
     @SerializedName("deviceStatus")
     @Expose
     private String deviceStatus;
+    
     @SerializedName("deviceColor")
     @Expose
     private String deviceColor;
+    
     @SerializedName("features")
     @Expose
     private Features features;
+    
     @SerializedName("lowPowerMode")
     @Expose
     private Boolean lowPowerMode;
+    
     @SerializedName("rawDeviceModel")
     @Expose
     private String rawDeviceModel;
+    
     @SerializedName("id")
     @Expose
     private String id;
+    
     @SerializedName("remoteLock")
     @Expose
     private Object remoteLock;
+    
     @SerializedName("isLocating")
     @Expose
     private Boolean isLocating;
+    
     @SerializedName("modelDisplayName")
     @Expose
     private String modelDisplayName;
+    
     @SerializedName("lostTimestamp")
     @Expose
     private String lostTimestamp;
+    
     @SerializedName("batteryLevel")
     @Expose
     private Double batteryLevel;
+    
     @SerializedName("mesg")
     @Expose
     private Object mesg;
+    
     @SerializedName("locationEnabled")
     @Expose
     private Boolean locationEnabled;
+    
     @SerializedName("lockedTimestamp")
     @Expose
     private Object lockedTimestamp;
+    
     @SerializedName("locFoundEnabled")
     @Expose
     private Boolean locFoundEnabled;
+    
     @SerializedName("snd")
     @Expose
     private Object snd;
+    
     @SerializedName("fmlyShare")
     @Expose
     private Boolean fmlyShare;
+    
     @SerializedName("lostDevice")
     @Expose
     private Object lostDevice;
+    
     @SerializedName("lostModeCapable")
     @Expose
     private Boolean lostModeCapable;
+    
     @SerializedName("wipedTimestamp")
     @Expose
     private Object wipedTimestamp;
+    
     @SerializedName("deviceDisplayName")
     @Expose
     private String deviceDisplayName;
+    
     @SerializedName("prsId")
     @Expose
     private Object prsId;
+    
     @SerializedName("audioChannels")
     @Expose
     private List<Object> audioChannels = null;
+    
     @SerializedName("locationCapable")
     @Expose
     private Boolean locationCapable;
+    
     @SerializedName("batteryStatus")
     @Expose
     private String batteryStatus;
+    
     @SerializedName("trackingInfo")
     @Expose
     private Object trackingInfo;
+    
     @SerializedName("name")
     @Expose
     private String name;
+    
     @SerializedName("isMac")
     @Expose
     private Boolean isMac;
+    
     @SerializedName("thisDevice")
     @Expose
     private Boolean thisDevice;
+    
     @SerializedName("deviceClass")
     @Expose
     private String deviceClass;
+    
     @SerializedName("location")
     @Expose
     private Object location;
+    
     @SerializedName("deviceModel")
     @Expose
     private String deviceModel;
+    
     @SerializedName("maxMsgChar")
     @Expose
     private Integer maxMsgChar;
+    
     @SerializedName("darkWake")
     @Expose
     private Boolean darkWake;
+    
     @SerializedName("remoteWipe")
     @Expose
     private Object remoteWipe;
 
-    public Object getMsg() {
+    public Object getMsg() 
+    {
         return msg;
     }
 
-    public void setMsg(Object msg) {
+    public void setMsg(Object msg) 
+    {
         this.msg = msg;
     }
 
-    public Boolean getCanWipeAfterLock() {
+    public Boolean getCanWipeAfterLock() 
+    {
         return canWipeAfterLock;
     }
 
-    public void setCanWipeAfterLock(Boolean canWipeAfterLock) {
+    public void setCanWipeAfterLock(Boolean canWipeAfterLock) 
+    {
         this.canWipeAfterLock = canWipeAfterLock;
     }
 
-    public Boolean getWipeInProgress() {
+    public Boolean getWipeInProgress() 
+    {
         return wipeInProgress;
     }
 
-    public void setWipeInProgress(Boolean wipeInProgress) {
+    public void setWipeInProgress(Boolean wipeInProgress) 
+    {
         this.wipeInProgress = wipeInProgress;
     }
 
-    public Boolean getLostModeEnabled() {
+    public Boolean getLostModeEnabled() 
+    {
         return lostModeEnabled;
     }
 
-    public void setLostModeEnabled(Boolean lostModeEnabled) {
+    public void setLostModeEnabled(Boolean lostModeEnabled) 
+    {
         this.lostModeEnabled = lostModeEnabled;
     }
 
-    public Boolean getActivationLocked() {
+    public Boolean getActivationLocked() 
+    {
         return activationLocked;
     }
 
-    public void setActivationLocked(Boolean activationLocked) {
+    public void setActivationLocked(Boolean activationLocked) 
+    {
         this.activationLocked = activationLocked;
     }
 
-    public Integer getPasscodeLength() {
+    public Integer getPasscodeLength() 
+    {
         return passcodeLength;
     }
 
-    public void setPasscodeLength(Integer passcodeLength) {
+    public void setPasscodeLength(Integer passcodeLength) 
+    {
         this.passcodeLength = passcodeLength;
     }
 
-    public String getDeviceStatus() {
+    public String getDeviceStatus() 
+    {
         return deviceStatus;
     }
 
-    public void setDeviceStatus(String deviceStatus) {
+    public void setDeviceStatus(String deviceStatus) 
+    {
         this.deviceStatus = deviceStatus;
     }
 
-    public String getDeviceColor() {
+    public String getDeviceColor() 
+    {
         return deviceColor;
     }
 
-    public void setDeviceColor(String deviceColor) {
+    public void setDeviceColor(String deviceColor) 
+    {
         this.deviceColor = deviceColor;
     }
 
-    public Features getFeatures() {
+    public Features getFeatures() 
+    {
         return features;
     }
 
-    public void setFeatures(Features features) {
+    public void setFeatures(Features features) 
+    {
         this.features = features;
     }
 
-    public Boolean getLowPowerMode() {
+    public Boolean getLowPowerMode() 
+    {
         return lowPowerMode;
     }
 
-    public void setLowPowerMode(Boolean lowPowerMode) {
+    public void setLowPowerMode(Boolean lowPowerMode) 
+    {
         this.lowPowerMode = lowPowerMode;
     }
 
-    public String getRawDeviceModel() {
+    public String getRawDeviceModel() 
+    {
         return rawDeviceModel;
     }
 
-    public void setRawDeviceModel(String rawDeviceModel) {
+    public void setRawDeviceModel(String rawDeviceModel) 
+    {
         this.rawDeviceModel = rawDeviceModel;
     }
 
-    public String getId() {
+    public String getId() 
+    {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) 
+    {
         this.id = id;
     }
 
-    public Object getRemoteLock() {
+    public Object getRemoteLock() 
+    {
         return remoteLock;
     }
 
-    public void setRemoteLock(Object remoteLock) {
+    public void setRemoteLock(Object remoteLock) 
+    {
         this.remoteLock = remoteLock;
     }
 
-    public Boolean getIsLocating() {
+    public Boolean getIsLocating() 
+    {
         return isLocating;
     }
 
-    public void setIsLocating(Boolean isLocating) {
+    public void setIsLocating(Boolean isLocating) 
+    {
         this.isLocating = isLocating;
     }
 
-    public String getModelDisplayName() {
+    public String getModelDisplayName() 
+    {
         return modelDisplayName;
     }
 
-    public void setModelDisplayName(String modelDisplayName) {
+    public void setModelDisplayName(String modelDisplayName) 
+    {
         this.modelDisplayName = modelDisplayName;
     }
 
-    public String getLostTimestamp() {
+    public String getLostTimestamp() 
+    {
         return lostTimestamp;
     }
 
-    public void setLostTimestamp(String lostTimestamp) {
+    public void setLostTimestamp(String lostTimestamp) 
+    {
         this.lostTimestamp = lostTimestamp;
     }
 
-    public Double getBatteryLevel() {
+    public Double getBatteryLevel() 
+    {
         return batteryLevel;
     }
 
-    public void setBatteryLevel(Double batteryLevel) {
+    public void setBatteryLevel(Double batteryLevel) 
+    {
         this.batteryLevel = batteryLevel;
     }
 
-    public Object getMesg() {
+    public Object getMesg() 
+    {
         return mesg;
     }
 
-    public void setMesg(Object mesg) {
+    public void setMesg(Object mesg) 
+    {
         this.mesg = mesg;
     }
 
-    public Boolean getLocationEnabled() {
+    public Boolean getLocationEnabled() 
+    {
         return locationEnabled;
     }
 
-    public void setLocationEnabled(Boolean locationEnabled) {
+    public void setLocationEnabled(Boolean locationEnabled) 
+    {
         this.locationEnabled = locationEnabled;
     }
 
-    public Object getLockedTimestamp() {
+    public Object getLockedTimestamp() 
+    {
         return lockedTimestamp;
     }
 
-    public void setLockedTimestamp(Object lockedTimestamp) {
+    public void setLockedTimestamp(Object lockedTimestamp) 
+    {
         this.lockedTimestamp = lockedTimestamp;
     }
 
-    public Boolean getLocFoundEnabled() {
+    public Boolean getLocFoundEnabled() 
+    {
         return locFoundEnabled;
     }
 
-    public void setLocFoundEnabled(Boolean locFoundEnabled) {
+    public void setLocFoundEnabled(Boolean locFoundEnabled) 
+    {
         this.locFoundEnabled = locFoundEnabled;
     }
 
-    public Object getSnd() {
+    public Object getSnd() 
+    {
         return snd;
     }
 
-    public void setSnd(Object snd) {
+    public void setSnd(Object snd) 
+    {
         this.snd = snd;
     }
 
-    public Boolean getFmlyShare() {
+    public Boolean getFmlyShare() 
+    {
         return fmlyShare;
     }
 
-    public void setFmlyShare(Boolean fmlyShare) {
+    public void setFmlyShare(Boolean fmlyShare) 
+    {
         this.fmlyShare = fmlyShare;
     }
 
-    public Object getLostDevice() {
+    public Object getLostDevice() 
+    {
         return lostDevice;
     }
 
-    public void setLostDevice(Object lostDevice) {
+    public void setLostDevice(Object lostDevice) 
+    {
         this.lostDevice = lostDevice;
     }
 
-    public Boolean getLostModeCapable() {
+    public Boolean getLostModeCapable() 
+    {
         return lostModeCapable;
     }
 
-    public void setLostModeCapable(Boolean lostModeCapable) {
+    public void setLostModeCapable(Boolean lostModeCapable) 
+    {
         this.lostModeCapable = lostModeCapable;
     }
 
-    public Object getWipedTimestamp() {
+    public Object getWipedTimestamp() 
+    {
         return wipedTimestamp;
     }
 
-    public void setWipedTimestamp(Object wipedTimestamp) {
+    public void setWipedTimestamp(Object wipedTimestamp) 
+    {
         this.wipedTimestamp = wipedTimestamp;
     }
 
-    public String getDeviceDisplayName() {
+    public String getDeviceDisplayName() 
+    {
         return deviceDisplayName;
     }
 
-    public void setDeviceDisplayName(String deviceDisplayName) {
+    public void setDeviceDisplayName(String deviceDisplayName) 
+    {
         this.deviceDisplayName = deviceDisplayName;
     }
 
-    public Object getPrsId() {
+    public Object getPrsId() 
+    {
         return prsId;
     }
 
-    public void setPrsId(Object prsId) {
+    public void setPrsId(Object prsId) 
+    {
         this.prsId = prsId;
     }
 
-    public List<Object> getAudioChannels() {
+    public List<Object> getAudioChannels() 
+    {
         return audioChannels;
     }
 
-    public void setAudioChannels(List<Object> audioChannels) {
+    public void setAudioChannels(List<Object> audioChannels) 
+    {
         this.audioChannels = audioChannels;
     }
 
-    public Boolean getLocationCapable() {
+    public Boolean getLocationCapable() 
+    {
         return locationCapable;
     }
 
-    public void setLocationCapable(Boolean locationCapable) {
+    public void setLocationCapable(Boolean locationCapable) 
+    {
         this.locationCapable = locationCapable;
     }
 
-    public String getBatteryStatus() {
+    public String getBatteryStatus() 
+    {
         return batteryStatus;
     }
 
-    public void setBatteryStatus(String batteryStatus) {
+    public void setBatteryStatus(String batteryStatus) 
+    {
         this.batteryStatus = batteryStatus;
     }
 
-    public Object getTrackingInfo() {
+    public Object getTrackingInfo() 
+    {
         return trackingInfo;
     }
 
-    public void setTrackingInfo(Object trackingInfo) {
+    public void setTrackingInfo(Object trackingInfo) 
+    {
         this.trackingInfo = trackingInfo;
     }
 
-    public String getName() {
+    public String getName() 
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) 
+    {
         this.name = name;
     }
 
-    public Boolean getIsMac() {
+    public Boolean getIsMac() 
+    {
         return isMac;
     }
 
-    public void setIsMac(Boolean isMac) {
+    public void setIsMac(Boolean isMac) 
+    {
         this.isMac = isMac;
     }
 
-    public Boolean getThisDevice() {
+    public Boolean getThisDevice() 
+    {
         return thisDevice;
     }
 
-    public void setThisDevice(Boolean thisDevice) {
+    public void setThisDevice(Boolean thisDevice) 
+    {
         this.thisDevice = thisDevice;
     }
 
-    public String getDeviceClass() {
+    public String getDeviceClass() 
+    {
         return deviceClass;
     }
 
-    public void setDeviceClass(String deviceClass) {
+    public void setDeviceClass(String deviceClass) 
+    {
         this.deviceClass = deviceClass;
     }
 
-    public Object getLocation() {
+    public Object getLocation() 
+    {
         return location;
     }
 
-    public void setLocation(Object location) {
+    public void setLocation(Object location) 
+    {
         this.location = location;
     }
 
-    public String getDeviceModel() {
+    public String getDeviceModel() 
+    {
         return deviceModel;
     }
 
-    public void setDeviceModel(String deviceModel) {
+    public void setDeviceModel(String deviceModel) 
+    {
         this.deviceModel = deviceModel;
     }
 
-    public Integer getMaxMsgChar() {
+    public Integer getMaxMsgChar() 
+    {
         return maxMsgChar;
     }
 
-    public void setMaxMsgChar(Integer maxMsgChar) {
+    public void setMaxMsgChar(Integer maxMsgChar) 
+    {
         this.maxMsgChar = maxMsgChar;
     }
 
-    public Boolean getDarkWake() {
+    public Boolean getDarkWake() 
+    {
         return darkWake;
     }
 
-    public void setDarkWake(Boolean darkWake) {
+    public void setDarkWake(Boolean darkWake) 
+    {
         this.darkWake = darkWake;
     }
 
-    public Object getRemoteWipe() {
+    public Object getRemoteWipe() 
+    {
         return remoteWipe;
     }
 
-    public void setRemoteWipe(Object remoteWipe) {
+    public void setRemoteWipe(Object remoteWipe) 
+    {
         this.remoteWipe = remoteWipe;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         return new HashCodeBuilder().append(msg).append(canWipeAfterLock).append(wipeInProgress).append(lostModeEnabled)
                 .append(activationLocked).append(passcodeLength).append(deviceStatus).append(deviceColor)
                 .append(features).append(lowPowerMode).append(rawDeviceModel).append(id).append(remoteLock)
@@ -497,11 +627,14 @@ public class Content {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public boolean equals(Object other) 
+    {
+        if (other == this) 
+        {
             return true;
         }
-        if ((other instanceof Content) == false) {
+        if ((other instanceof Content) == false) 
+        {
             return false;
         }
         Content rhs = ((Content) other);

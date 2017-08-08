@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class ICloudTestUtils
 {
+	
     static
     {
         BasicConfigurator.configure();
@@ -42,7 +43,8 @@ public class ICloudTestUtils
      */
     public static ICloudService getServiceFromSystemProperties()
     {
-    	if(iCloudService != null){
+    	if(iCloudService != null)
+    	{
     		return iCloudService;
     	}
     	iCloudService = new ICloudService(System.getProperty("icloud4j.test.clientId"));
