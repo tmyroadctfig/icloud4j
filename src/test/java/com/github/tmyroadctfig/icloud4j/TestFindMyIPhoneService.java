@@ -16,31 +16,38 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import org.junit.Test;
-import com.github.tmyroadctfig.icloud4j.json.AppleDevice;
+import static com.github.tmyroadctfig.icloud4j.ICloudTestUtils.getServiceFromSystemProperties;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static com.github.tmyroadctfig.icloud4j.ICloudTestUtils.getServiceFromSystemProperties;
+import org.junit.Test;
+
+import com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService.Content;
 
 /**
  * Tests for {@link FindMyIPhoneService}.
  */
-public class TestFindMyIPhoneService
-{
+public class TestFindMyIPhoneService {
+	
     @Test
-    public void testDevices()
-    {
+    public void testDevices() {
         // Arrange
         ICloudService iCloudService = getServiceFromSystemProperties();
         FindMyIPhoneService findMyIPhoneService = new FindMyIPhoneService(iCloudService);
 
         // Act
-        List<AppleDevice> devices = findMyIPhoneService.getDevices();
+        List<Content> devices = findMyIPhoneService.getDevices();
 
         // Assert
         assertThat(devices.isEmpty(), is(false));
+
+        for (Content device : devices) 
+        {
+            assertNotNull(device);
+        }
     }
+    
 }

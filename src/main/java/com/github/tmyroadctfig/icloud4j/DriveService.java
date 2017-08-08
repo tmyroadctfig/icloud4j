@@ -16,24 +16,25 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.DriveNodeDetails;
-import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
-import com.google.common.base.Throwables;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+
+import com.github.tmyroadctfig.icloud4j.json.DriveNodeDetails;
+import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
+import com.google.common.base.Throwables;
+
 /**
  * Access to the iCloud Drive service.
  *
  * @author Luke Quinanne
  */
-public class DriveService
+public class DriveService 
 {
     /**
      * The iCloud service.
@@ -55,7 +56,7 @@ public class DriveService
      *
      * @param iCloudService the iCloud service.
      */
-    public DriveService(ICloudService iCloudService)
+    public DriveService(ICloudService iCloudService) 
     {
         this.iCloudService = iCloudService;
         Map<String, Object> driveSettings = (Map<String, Object>) iCloudService.getWebServicesMap().get("drivews");
@@ -70,7 +71,7 @@ public class DriveService
      *
      * @return the root node.
      */
-    public DriveNode getRoot()
+    public DriveNode getRoot() 
     {
         String rootId = "FOLDER::com.apple.CloudDocs::root";
         return new DriveNode(iCloudService, this, rootId, getNodeDetails(rootId));
@@ -82,18 +83,19 @@ public class DriveService
      * @param nodeId the node ID.
      * @return the node details.
      */
-    public DriveNodeDetails getNodeDetails(String nodeId)
+    public DriveNodeDetails getNodeDetails(String nodeId) 
     {
-        try
+        try 
         {
             HttpPost post = new HttpPost(serviceRoot + "/retrieveItemDetailsInFolders");
             iCloudService.populateRequestHeadersParameters(post);
             post.addHeader("clientMasteringNumber", "14E45");
-            post.setEntity(new StringEntity(String.format("[{\"drivewsid\":\"%s\",\"partialData\":false}]", nodeId), "UTF-8"));
+            post.setEntity(
+                    new StringEntity(String.format("[{\"drivewsid\":\"%s\",\"partialData\":false}]", nodeId), "UTF-8"));
 
             return ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), post, DriveNodeDetails[].class)[0];
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
             throw Throwables.propagate(e);
         }
@@ -105,18 +107,17 @@ public class DriveService
      * @param parentId the ID to look up the children for.
      * @return the list of children.
      */
-    public List<DriveNode> getChildren(String parentId)
+    public List<DriveNode> getChildren(String parentId) 
     {
         DriveNodeDetails nodeDetails = getNodeDetails(parentId);
-        if (nodeDetails.items == null)
+        if (nodeDetails.items == null) 
         {
             return Collections.emptyList();
         }
 
-        return Stream
-            .of(nodeDetails.items)
-            .map(childDetails -> new DriveNode(iCloudService, this, childDetails.drivewsid, childDetails))
-            .collect(Collectors.toList());
+        return Stream.of(nodeDetails.items)
+                .map(childDetails -> new DriveNode(iCloudService, this, childDetails.drivewsid, childDetails))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -124,7 +125,7 @@ public class DriveService
      *
      * @return the service URL.
      */
-    public String getServiceUrl()
+    public String getServiceUrl() 
     {
         return serviceRoot;
     }
@@ -134,7 +135,7 @@ public class DriveService
      *
      * @return the service URL.
      */
-    public String getDocsServiceUrl()
+    public String getDocsServiceUrl() 
     {
         return docsServiceRoot;
     }

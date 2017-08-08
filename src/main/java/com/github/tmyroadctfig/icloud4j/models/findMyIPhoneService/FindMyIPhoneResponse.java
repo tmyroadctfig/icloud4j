@@ -14,38 +14,37 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.findMyIPhoneService;
+
+import java.util.List;
 
 /**
- * A folder in the photos service.
+ * A response from the refresh call to the 'find my iPhone' service.
+ *
+ * @author Luke Quinane
  */
-public class PhotosFolder
+public class FindMyIPhoneResponse 
 {
-    public String keyAssetClientId;
+    /**
+     * The list of Apple devices returned in the response.
+     */
+    private List<AppleDevice> content;
 
     /**
-     * The contents type, e.g. "folder", "asset".
+     * returns the list of Apple devices returned in the response.
+     * @return
      */
-    public String contentsType;
-
-    public String dateRange;
-
-    public String childAssetsBinaryFeed;
+    public List<AppleDevice> getContent() 
+    {
+        return content;
+    }
 
     /**
-     * The child folder IDs.
+     * set the list of Apple devices.
+     * @param content {@link List} of {@link AppleDevice}
      */
-    public String[] childFolderIds;
-
-    /**
-     * The type, e.g. "folder", "album".
-     */
-    public String type;
-
-    /**
-     * The server ID, e.g. "all-photos", "deleted-photos".
-     */
-    public String serverId;
-
-    public boolean isServerGenerated;
+    public void setContent(List<AppleDevice> content) 
+    {
+        this.content = content;
+    }
 }

@@ -16,25 +16,25 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import com.github.tmyroadctfig.icloud4j.json.UbiquityGetChildrenResponse;
-import com.github.tmyroadctfig.icloud4j.json.UbiquityNodeDetails;
-import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
-import com.google.common.base.Throwables;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.client.methods.HttpGet;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.client.methods.HttpGet;
+
+import com.github.tmyroadctfig.icloud4j.models.ubiquityService.UbiquityGetChildrenResponse;
+import com.github.tmyroadctfig.icloud4j.models.ubiquityService.UbiquityNodeDetails;
+import com.github.tmyroadctfig.icloud4j.util.ICloudUtils;
+import com.google.common.base.Throwables;
 
 /**
  * A node in the ubiquity service.
  *
  * @author Luke Quinane
  */
-public class UbiquityNode
+public class UbiquityNode 
 {
     /**
      * The iCloud service.
@@ -64,7 +64,8 @@ public class UbiquityNode
      * @param id the ID.
      * @param nodeDetails the details for the node.
      */
-    public UbiquityNode(ICloudService iCloudService, UbiquityService ubiquityService, String id, UbiquityNodeDetails nodeDetails)
+    public UbiquityNode(ICloudService iCloudService, UbiquityService ubiquityService, String id,
+            UbiquityNodeDetails nodeDetails) 
     {
         this.iCloudService = iCloudService;
         this.ubiquityService = ubiquityService;
@@ -77,22 +78,23 @@ public class UbiquityNode
      *
      * @return the children.
      */
-    public List<UbiquityNode> getChildren()
+    public List<UbiquityNode> getChildren() 
     {
-        try
+        try 
         {
-            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(), "parent", id);
+            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(),
+                    "parent", id);
             HttpGet httpGet = new HttpGet(url);
             iCloudService.populateRequestHeadersParameters(httpGet);
 
-            UbiquityGetChildrenResponse getChildrenResponse =
-                ICloudUtils.parseJsonResponse(iCloudService.getHttpClient(), httpGet, UbiquityGetChildrenResponse.class);
+            UbiquityGetChildrenResponse getChildrenResponse = ICloudUtils
+                    .parseJsonResponse(iCloudService.getHttpClient(), httpGet, UbiquityGetChildrenResponse.class);
 
-            return Stream.of(getChildrenResponse.item_list)
-                .map(item -> new UbiquityNode(iCloudService, ubiquityService, item.item_id, item))
-                .collect(Collectors.toList());
-        }
-        catch (Exception e)
+            return getChildrenResponse.getItemList().stream()
+                    .map(item -> new UbiquityNode(iCloudService, ubiquityService, item.getItemId(), item))
+                    .collect(Collectors.toList());
+        } 
+        catch (Exception e) 
         {
             throw Throwables.propagate(e);
         }
@@ -103,20 +105,21 @@ public class UbiquityNode
      *
      * @param outputStream the output stream to write to.
      */
-    public void downloadFileData(OutputStream outputStream)
+    public void downloadFileData(OutputStream outputStream) 
     {
-        try
+        try 
         {
-            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(), "file", id);
+            String url = String.format("%s/ws/%s/%s/%s", ubiquityService.getServiceUrl(), iCloudService.getSessionId(),
+                    "file", id);
             HttpGet httpGet = new HttpGet(url);
             iCloudService.populateRequestHeadersParameters(httpGet);
 
-            try (InputStream inputStream = iCloudService.getHttpClient().execute(httpGet).getEntity().getContent())
+            try (InputStream inputStream = iCloudService.getHttpClient().execute(httpGet).getEntity().getContent()) 
             {
                 IOUtils.copyLarge(inputStream, outputStream, new byte[0x10000]);
             }
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
             throw Throwables.propagate(e);
         }
@@ -127,9 +130,9 @@ public class UbiquityNode
      *
      * @return the type.
      */
-    public String getType()
+    public String getType() 
     {
-        return nodeDetails.type;
+        return nodeDetails.getType();
     }
 
     /**
@@ -137,14 +140,14 @@ public class UbiquityNode
      *
      * @return th details.
      */
-    public UbiquityNodeDetails getNodeDetails()
+    public UbiquityNodeDetails getNodeDetails() 
     {
         return nodeDetails;
     }
 
     @Override
-    public String toString()
+    public String toString() 
     {
-        return String.format("u-node:[%s %s '%s']", id, nodeDetails.type, nodeDetails.name);
+        return String.format("u-node:[%s %s '%s']", id, nodeDetails.getType(), nodeDetails.getName());
     }
 }

@@ -14,15 +14,19 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.iCloudService;
 
 /**
- * A response from the photos service returning albums.
+ * A trusted device response sent back as part of the two-factor authentication process.
+ *
+ * @author Luke Quinane
  */
-public class PhotosAlbumsResponse
+public class TrustedDeviceResponse extends TrustedDevice
 {
     /**
-     * The list of folders returned in the response.
+     * The two-factor verification code.
      */
-    public PhotosFolder[] folders;
+    public String verificationCode;
+
+    public boolean trustBrowser;
 }

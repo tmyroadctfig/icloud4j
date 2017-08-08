@@ -29,6 +29,7 @@ import static com.github.tmyroadctfig.icloud4j.ICloudTestUtils.getServiceFromSys
  */
 public class TestICloudService
 {
+	
     @Test
     public void testLogin()
     {
@@ -53,4 +54,5 @@ public class TestICloudService
         assertThat(storageUsage.get("storageUsageInfo"), is(not(nullValue())));
         assertThat(storageUsage.get("storageUsageByMedia"), is(not(nullValue())));
     }
+    
 }

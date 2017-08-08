@@ -14,19 +14,38 @@
  *    limitations under the License.
  */
 
-package com.github.tmyroadctfig.icloud4j.json;
+package com.github.tmyroadctfig.icloud4j.models.iCloudService;
 
 /**
- * A trusted device response sent back as part of the two-factor authentication process.
+ * The list of trusted two-factor authentication devices.
  *
  * @author Luke Quinane
  */
-public class TrustedDeviceResponse extends TrustedDevice
+public class TrustedDevice
 {
     /**
-     * The two-factor verification code.
+     * The device type, e.g. "SMS".
      */
-    public String verificationCode;
+    public String deviceType;
 
-    public boolean trustBrowser;
+    /**
+     * The area code.
+     */
+    public String areaCode;
+
+    /**
+     * The obfuscated phone number. E.g. "*******00".
+     */
+    public String phoneNumber;
+
+    /**
+     * The device ID, e.g. "1".
+     */
+    public String deviceId;
+
+    @Override
+    public String toString()
+    {
+        return String.format("[%s] %s: (%s) %s", deviceId, deviceType, areaCode, phoneNumber);
+    }
 }

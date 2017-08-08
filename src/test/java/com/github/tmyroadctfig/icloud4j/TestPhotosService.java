@@ -16,22 +16,22 @@
 
 package com.github.tmyroadctfig.icloud4j;
 
-import org.junit.Test;
-import com.github.tmyroadctfig.icloud4j.json.PhotosFolder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.Test;
+
+import com.github.tmyroadctfig.icloud4j.models.photosService.PhotosFolder;
 
 /**
  * Tests for {@link PhotosService}.
  */
-public class TestPhotosService
-{
+public class TestPhotosService {
+	
     @Test
-    public void testDevices()
-    {
+    public void testDevices() {
         // Arrange
         ICloudService iCloudService = ICloudTestUtils.getServiceFromSystemProperties();
         PhotosService photosService = new PhotosService(iCloudService);
@@ -42,4 +42,5 @@ public class TestPhotosService
         // Assert
         assertThat(albums.isEmpty(), is(false));
     }
+    
 }
