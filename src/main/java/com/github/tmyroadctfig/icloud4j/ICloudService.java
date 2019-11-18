@@ -41,6 +41,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
@@ -110,40 +111,59 @@ public class ICloudService implements java.io.Closeable
     private String dsid;
 
     /**
-     * Creates a new iCloud service instance
+     * Creates a new iCloud service instance.
      *
      * @param clientId the client ID.
      */
     public ICloudService(@Nonnull String clientId)
     {
+        this(clientId, null);
+    }
+
+    /**
+     * Creates a new iCloud service instance.
+     *
+     * @param clientId the client ID.
+     * @param httpClient the closeable http client.
+     */
+    public ICloudService(@Nonnull String clientId, @Nullable CloseableHttpClient httpClient)
+    {
         this.clientId = clientId;
 
         cookieStore = new BasicCookieStore();
-        try
+
+        if (httpClient != null)
         {
-            HttpClientBuilder clientBuilder = HttpClientBuilder
-                .create()
-                .setDefaultCookieStore(cookieStore);
-
-            if (!Strings.isNullOrEmpty(PROXY_HOST))
-            {
-                clientBuilder.setProxy(new HttpHost(PROXY_HOST, PROXY_PORT));
-            }
-
-            if (DISABLE_SSL_CHECKS)
-            {
-                clientBuilder
-                    .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                    .setSslcontext(new SSLContextBuilder()
-                        .loadTrustMaterial(null, (x509CertChain, authType) -> true)
-                        .build());
-            }
-
-            httpClient = clientBuilder.build();
+            this.httpClient = httpClient;
         }
-        catch (Exception e)
+        else
         {
-            throw Throwables.propagate(e);
+            try
+            {
+                HttpClientBuilder clientBuilder = HttpClientBuilder
+                    .create()
+                    .setDefaultCookieStore(cookieStore);
+
+                if (!Strings.isNullOrEmpty(PROXY_HOST))
+                {
+                    clientBuilder.setProxy(new HttpHost(PROXY_HOST, PROXY_PORT));
+                }
+
+                if (DISABLE_SSL_CHECKS)
+                {
+                    clientBuilder
+                        .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                        .setSslcontext(new SSLContextBuilder()
+                            .loadTrustMaterial(null, (x509CertChain, authType) -> true)
+                            .build());
+                }
+
+                this.httpClient = clientBuilder.build();
+            }
+            catch (Exception e)
+            {
+                throw Throwables.propagate(e);
+            }
         }
 
         idmsaService = new IdmsaService(this);
