@@ -23,7 +23,7 @@ package com.github.tmyroadctfig.icloud4j.json;
  */
 public class AppleDevice
 {
-    public String msg;
+    // public String msg;
     public boolean canWipeAfterLock;
     public boolean wipeInProgress;
     public boolean lostModeEnabled;
@@ -39,7 +39,7 @@ public class AppleDevice
     public String modelDisplayName;
     public String lostTimestamp;
     public double batteryLevel;
-    public String mesg;
+    // public String mesg;
     public boolean locationEnabled;
     public String lockedTimestamp;
     public boolean locFoundEnabled;
