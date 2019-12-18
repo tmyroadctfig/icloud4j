@@ -97,7 +97,7 @@ public class DriveNode
         if (url.isPresent())
         {
             String urlString = url.get();
-            downloadUrlToken = urlString.substring(urlString.indexOf("t="));
+            downloadUrlToken = urlString.substring(urlString.indexOf("t=") + 2);
         }
         else
         {
