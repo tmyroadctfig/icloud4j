@@ -21,6 +21,7 @@ import com.github.tmyroadctfig.icloud4j.util.JsonToMapResponseHandler;
 import com.google.common.base.Splitter;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -29,8 +30,10 @@ import org.apache.http.cookie.Cookie;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A node in the iCloud Drive service.
@@ -89,8 +92,17 @@ public class DriveNode
             .orElse("");
 
         // E.g. "v=2:t=AQAAAABXzO24CYflBW2JwysxyUEL9KxRNoEX1Qk~"
-        Map<String, String> authMap = Splitter.on(":").omitEmptyStrings().trimResults().withKeyValueSeparator("=").split(rawDownloadUrlToken);
-        downloadUrlToken = authMap.get("t");
+        //Map<String, String> authMap = Splitter.on(":").omitEmptyStrings().trimResults().withKeyValueSeparator("=").split(rawDownloadUrlToken);
+        Optional<String> url = Lists.newArrayList(Splitter.on(":").split(rawDownloadUrlToken)).stream().filter(str -> str.contains("t=")).findFirst();
+        if (url.isPresent())
+        {
+            String urlString = url.get();
+            downloadUrlToken = urlString.substring(urlString.indexOf("t="));
+        }
+        else
+        {
+            downloadUrlToken = "";
+        }
     }
 
     /**
