@@ -92,7 +92,6 @@ public class DriveNode
             .orElse("");
 
         // E.g. "v=2:t=AQAAAABXzO24CYflBW2JwysxyUEL9KxRNoEX1Qk~"
-        //Map<String, String> authMap = Splitter.on(":").omitEmptyStrings().trimResults().withKeyValueSeparator("=").split(rawDownloadUrlToken);
         Optional<String> url = Lists.newArrayList(Splitter.on(":").split(rawDownloadUrlToken)).stream().filter(str -> str.contains("t=")).findFirst();
         if (url.isPresent())
         {
