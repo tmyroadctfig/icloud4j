@@ -18,7 +18,6 @@ package com.github.tmyroadctfig.icloud4j;
 
 import com.github.tmyroadctfig.icloud4j.json.TrustedDevice;
 import org.apache.http.StatusLine;
-import org.apache.log4j.BasicConfigurator;
 
 import java.util.List;
 
@@ -27,11 +26,6 @@ import java.util.List;
  */
 public class ICloudTestUtils
 {
-    static
-    {
-        BasicConfigurator.configure();
-    }
-
     /**
      * Gets a new iCloud4j service instance from system properties.
      *
